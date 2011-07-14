@@ -82,8 +82,8 @@ Here is an example of the `process.php` page:
 
     $form = new Namodg('key_longer_than_10_chars');
     
-    // Check the data passed to this file. If it's not valid and can't be processed,
-    // redirect the user to the homepage.
+    // Check the data passed to this file. If there is no data or the data
+    // can't be decrypted using the key, redirect the user to the homepage.
     if ( ! $form->canBeProcessed() ) {
         header('Location: index.php');
     }

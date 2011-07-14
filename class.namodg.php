@@ -25,14 +25,8 @@ require_once 'class.namodg.defaultFields.php';
  * Namodg is the main class to interact with the form. It offers an API that allows to 
  * add fields, maniuplate them, validate them and render the form with or without them.
  * 
- * Usage Example: 
- * <code>
- *   $form = new Namodg('da#das4243');
- *   $form->addTextField('name');
- *   echo $form;
- * </code>
- * 
  * @package Namodg
+ * @see README.markdown
  */
 class Namodg {
 
