@@ -248,9 +248,9 @@ class NamodgField_Captcha extends NamodgField_Base {
  */
 class NamodgField_Submit extends NamodgField_Base {
 
-    public function __construct($name, $value, $options = array()) {
+    public function __construct($name, $value = null, $options = array()) {
         parent::__construct($name, $options);
-        $this->setValue($value);
+        $this->setValue(is_null($value) ? $name : $value);
         $this->setOption('send', false);
     }
 
