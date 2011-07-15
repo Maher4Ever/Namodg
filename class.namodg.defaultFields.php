@@ -74,14 +74,18 @@ class NamodgField_Email extends NamodgField_Base {
     public function isValid() {
         $value = $this->getValue();
 
-        if ($this->getOption('required') && empty($value)) {
-            $this->_setValidationError('required');
-            return false;
-        }
-
-        if ( !filter_var( $value, FILTER_VALIDATE_EMAIL )) {
-            $this->_setValidationError('email_not_valid');
-            return false;
+        if ($this->getOption('required')) {
+            
+            if ( empty($value) ) {
+                $this->_setValidationError('required');
+                return false;
+            }
+            
+            if ( !filter_var( $value, FILTER_VALIDATE_EMAIL )) {
+                $this->_setValidationError('email_not_valid');
+                return false;
+            }
+            
         }
 
         return true;
@@ -110,16 +114,20 @@ class NamodgField_NumberField extends NamodgField_Base {
     public function isValid() {
         $value = $this->getValue();
 
-        if ($this->getOption('required') && empty($value)) {
-            $this->_setValidationError('required');
-            return false;
+        if ($this->getOption('required')) {
+            
+            if ( empty($value) ) {
+                $this->_setValidationError('required');
+                return false;
+            }
+            
+            if ( !filter_var( $value, FILTER_VALIDATE_INT )) {
+                $this->_setValidationError('not_number');
+                return false;
+            }
+            
         }
-
-        if ( !filter_var( $value, FILTER_VALIDATE_INT )) {
-            $this->_setValidationError('not_number');
-            return false;
-        }
-
+        
         return true;
     }
 
@@ -152,13 +160,17 @@ class NamodgField_Select extends NamodgField_Base {
     }
 
     public function getCleanedValue() {
-        return filter_var( $this->getValue(), FILTER_SANITIZE_STRING);
+        if ( $this->getValue() == $this->getOption('default')) {
+            return '';
+        } else {
+            return filter_var( $this->getValue(), FILTER_SANITIZE_STRING);
+        }
     }
 
     public function isValid() {
         $value = $this->getValue();
-
-        if (empty($value)) {
+        
+        if ($this->getOption('required') && ($value == $this->getOption('default') || empty($value)) ){
             $this->_setValidationError('required');
             return false;
         }
