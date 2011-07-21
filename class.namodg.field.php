@@ -187,7 +187,7 @@ abstract class NamodgField_Base implements NamodgField {
      * @return string
      */
     public function getOption($id) {
-        return $this->_options[$id];
+        return isset($this->_options[$id]) ? $this->_options[$id] : null;
     }
 
     /**
