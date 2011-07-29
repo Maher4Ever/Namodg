@@ -121,6 +121,10 @@ class NamodgField_NumberField extends NamodgField_Base {
                 return false;
             }
             
+			/*
+			 * Regex is used here because filter_var validates
+			 * integers which begins with a zero as floats.
+			 */
             if ( ! preg_match( '/^[0-9]+$/', $value ) ) {
                 $this->_setValidationError('not_number');
                 return false;
