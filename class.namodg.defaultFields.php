@@ -121,7 +121,7 @@ class NamodgField_NumberField extends NamodgField_Base {
                 return false;
             }
             
-            if ( !filter_var( $value, FILTER_VALIDATE_INT )) {
+            if ( ! preg_match( '/^[0-9]+$/', $value ) ) {
                 $this->_setValidationError('not_number');
                 return false;
             }
