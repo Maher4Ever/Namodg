@@ -122,9 +122,8 @@ class NamodgField_NumberField extends NamodgField_Base {
         }
 
         // Validate the type of the value even if the field is not required 
-        // when it's not empty. Regex is used here because filter_var validates
-        // integers which begins with a zero as floats.
-        if ( ! empty($value) && ! preg_match( '/^[0-9]+$/', $value ) ) {
+        // when it's not empty. Matches 0-9 and Arabic numbers.
+        if ( ! empty($value) && ! preg_match( '/^[0-9\x{0660}-\x{0669}]+$/u', $value ) ) {
             $this->_setValidationError('not_number');
             return false;
         }
