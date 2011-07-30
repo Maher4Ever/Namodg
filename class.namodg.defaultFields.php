@@ -75,17 +75,17 @@ class NamodgField_Email extends NamodgField_Base {
         $value = $this->getValue();
 
         if ($this->getOption('required')) {
-            
             if ( empty($value) ) {
                 $this->_setValidationError('required');
                 return false;
             }
-            
-            if ( !filter_var( $value, FILTER_VALIDATE_EMAIL )) {
-                $this->_setValidationError('email_not_valid');
-                return false;
-            }
-            
+        }
+
+        // Validate the type of the value even if the field is not required 
+        // when it's not empty
+        if ( ! empty($value) && ! filter_var( $value, FILTER_VALIDATE_EMAIL ) ) {
+            $this->_setValidationError('email_not_valid');
+            return false;
         }
 
         return true;
@@ -115,23 +115,20 @@ class NamodgField_NumberField extends NamodgField_Base {
         $value = $this->getValue();
 
         if ($this->getOption('required')) {
-            
             if ( empty($value) ) {
                 $this->_setValidationError('required');
                 return false;
             }
-            
-			/*
-			 * Regex is used here because filter_var validates
-			 * integers which begins with a zero as floats.
-			 */
-            if ( ! preg_match( '/^[0-9]+$/', $value ) ) {
-                $this->_setValidationError('not_number');
-                return false;
-            }
-            
         }
-        
+
+        // Validate the type of the value even if the field is not required 
+        // when it's not empty. Regex is used here because filter_var validates
+        // integers which begins with a zero as floats.
+        if ( ! empty($value) && ! preg_match( '/^[0-9]+$/', $value ) ) {
+            $this->_setValidationError('not_number');
+            return false;
+        }
+
         return true;
     }
 
