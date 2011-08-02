@@ -258,14 +258,22 @@ class NamodgField_Captcha extends NamodgField_Base {
     }
 
     private function _validateArabicNumber($arNum) {
-
-        $num = (string)$this->_getCaptchaAnswer();
+        
+        // Check if the passed value is actually an Arabic number
+        if ( ! preg_match('/^[\x{0660}-\x{0669}]+$/u', $arNum) ) {
+            return false;
+        }
+        
+        $answer = (string)$this->_getCaptchaAnswer();
         $pattren = '';
-
-        for($i = 0, $len = strlen($num); $i < $len; $i++) {
+        
+        // Convert the answer from ASCCI to Unicode
+        for($i = 0, $len = strlen($answer); $i < $len; $i++) {
+            
             // Arabic zero in unicode = 0x0660 and Zero in ASCII = 48
             // Our base to convert: 660-48 = 612
-            $pattren .= '\x{' . ( ord($num[$i]) + 612 ) . '}';
+            $pattren .= '\x{' . ( ord($answer[$i]) + 612 ) . '}';
+            
         }
         
         return preg_match('/^' . $pattren . '$/u', $arNum);
