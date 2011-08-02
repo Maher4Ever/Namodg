@@ -206,16 +206,17 @@ class NamodgField_Captcha extends NamodgField_Base {
     }
 
     public function isValid() {
-        $value = $this->getValue();
+        $value = trim($this->getValue());
 
         if (empty($value)) {
             $this->_setValidationError('required');
             return false;
         }
 
-        $rands = $this->_getCaptchaQuestion();
-
-        if ((int)$value !== ($rands[0] + $rands[1])) {
+        if ( (int)$value !== $this->_getCaptchaAnswer() &&
+             ! $this->_validateArabicNumber($value) 
+           ) 
+        {
             $this->_setValidationError('captcha_answer_wrong');
             return false;
         }
@@ -250,6 +251,24 @@ class NamodgField_Captcha extends NamodgField_Base {
             $this->_rand1,
             $this->_rand2
         );
+    }
+
+    protected function _getCaptchaAnswer() {
+        return $this->_rand1 + $this->_rand2;
+    }
+
+    private function _validateArabicNumber($arNum) {
+
+        $num = (string)$this->_getCaptchaAnswer();
+        $pattren = '';
+
+        for($i = 0, $len = strlen($num); $i < $len; $i++) {
+            // Arabic zero in unicode = 0x0660 and Zero in ASCII = 48
+            // Our base to convert: 660-48 = 612
+            $pattren .= '\x{' . ( ord($num[$i]) + 612 ) . '}';
+        }
+        
+        return preg_match('/^' . $pattren . '$/u', $arNum);
     }
 }
 
