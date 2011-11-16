@@ -16,69 +16,12 @@
  */
 
 /**
- * Set the rules for all Namodg fields. This ensures all Namodg needs will be met from the extensions, but doesn't
- * ensure the returned value.
+ * The bluebrint for all Namodg_FieldInterfaces classes.
+ * It sets the default behavior of Namodg_FieldInterfaces objects.
  * 
  * @package Namodg
  */
-interface NamodgField {
-    
-    /**
-     * This should return the name of the the data-holder
-     * 
-     * @return string
-     */
-    public function getName();
-    
-    /**
-     * This should allow the change the data value
-     * 
-     * @param mixin
-     */
-    public function setValue($value);
-    
-    /**
-     * This should return the orignial data value
-     * 
-     * @return mixin
-     */
-    public function getValue();
-
-    /**
-     * This shuold return an escaped and cleaned data value
-     * 
-     * @return mixin
-     */
-    public function getCleanedValue();
-   
-    /**
-     * This should return the type of the data
-     * 
-     * @return string
-     */
-    public function getType();
-    
-    /**
-     * This should return a boolean indicating the status of the data
-     * 
-     * @return boolean
-     */
-    public function isValid();
-    
-    /**
-     * This should return the value inside a HTML tag
-     * 
-     * @return string
-     */
-    public function getHTML();
-}
-
-/**
- * The bluebrint for all NamodgField classes. It sets the default behavior of NamodgField objects.
- * 
- * @package Namodg
- */
-abstract class NamodgField_Base implements NamodgField {
+abstract class Namodg_FieldAbstract implements Namodg_FieldInterface {
 
     /**
      * Field name
@@ -165,7 +108,7 @@ abstract class NamodgField_Base implements NamodgField {
      */
     public function getType() {
         $class = get_class($this);
-        return (string)strtolower( substr($class, 12) ); // 'NamodgField_' == 12
+        return (string)strtolower( substr($class, 13) ); // strlen('Namodg_FieldInterface_') == 13
     }
 
     /**

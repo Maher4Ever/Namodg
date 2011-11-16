@@ -16,30 +16,13 @@
  */
 
 /**
- * Set the rules for all renderers. 
- * 
- * @package Namodg
- * @subpackage NamodgRenderer
- */
-interface NamodgRenderer {
-
-    public function getTag();
-
-    public function addAttr($id, $value);
-
-    public function getAttr($id);
-
-    public function render();
-}
-
-/**
  * The blueprint of all renderers. It sets the default behavior of render objects. It has extra helper methods
  * like addClass() and setID(). This renderer can be used to render any HTML tag.
  * 
  * @package Namodg
- * @subpackage NamodgRenderer
+ * @subpackage Namodg_RendererInterface
  */
-abstract class NamodgRenderer_Base implements NamodgRenderer {
+abstract class Namodg_RendererAbstract implements Namodg_RendererInterface {
 
     /**
      * HTML Tag container

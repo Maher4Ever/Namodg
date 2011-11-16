@@ -16,10 +16,18 @@
  */
 
 /*
- * Include dependencies
+ * Set include path
  */
-require_once 'class.namodg.defaultRenderers.php';
-require_once 'class.namodg.defaultFields.php';
+set_include_path(dirname( __FILE__ ) . PATH_SEPARATOR . get_include_path());
+
+/*
+ * Autoload Componenets
+ */
+function __autoload_namodg_component($component) {
+  $path = str_replace('_', '/', $component) . '.php';
+  require_once $path;
+}
+spl_autoload_register('__autoload_namodg_component');
 
 /**
  * Namodg is the main class to interact with the form. It offers an API that allows to 
@@ -50,7 +58,7 @@ class Namodg {
     private $_attrs = array();
 
     /**
-     * NamodgField objects container
+     * Namodg_FieldInterface objects container
      *
      * @var array
      */
@@ -89,7 +97,7 @@ class Namodg {
             if ( is_array($config) ) { // Then advanced configuration mode
                 
                 if ( ! isset ($config['key']) || empty ($config['key']) ) {
-                    throw new NamodgException('no_key');
+                    throw new Namodg_NamodgException('no_key');
                 } else {
                     self::$_key = $config['key'];
                 }  
@@ -103,7 +111,7 @@ class Namodg {
                 
             } else { // No configurations
                 
-                throw new NamodgException('no_key');
+                throw new Namodg_NamodgException('no_key');
    
             }
             
@@ -111,10 +119,10 @@ class Namodg {
             
             // Key should be 10 chars log at least
             if ( empty(self::$_key) || strlen(self::$_key) < 10 ) {
-                throw new NamodgException('weak_key');
+                throw new Namodg_NamodgException('weak_key');
             }
                 
-        } catch (NamodgException $e) {
+        } catch (Namodg_NamodgException $e) {
             
             if ( $suppressErrors ) {
                 $this->_fatalError = $e->getMessage();
@@ -148,7 +156,7 @@ class Namodg {
      *  Fields getter method
      *
      * @param string the name of the field
-     * @return NamodgField
+     * @return Namodg_FieldInterface
      */
     public function getField($name) {
         return $this->_fields[$name];
@@ -192,7 +200,7 @@ class Namodg {
             
             // Validate the objects
             foreach ($fields as $field) {
-                if ( ! ($field instanceof NamodgField) ) {
+                if ( ! ($field instanceof Namodg_FieldInterface) ) {
                     return false;
                 }
             }
@@ -266,7 +274,7 @@ class Namodg {
      * @return string the form HTML
      */
     public function __toString() {
-        $form = new NamodgFormRenderer( $this->getFields() , self::$_key);
+        $form = new Namodg_Renderer_FormRenderer( $this->getFields() , self::$_key);
         $form->addAttr('action', $this->_attrs['url']);
         $form->addAttr('method', $this->_attrs['method']);
 
@@ -282,8 +290,8 @@ class Namodg {
     }
     
     /**
-     * This function allows the addition of fields to the form without instantiating a new object (must implement NamodgField) manually.
-     * It tries to check if the called function is a class which implements NamodgField interface. If it does, it runs it. Otherwise
+     * This function allows the addition of fields to the form without instantiating a new object (must implement Namodg_FieldInterface) manually.
+     * It tries to check if the called function is a class which implements Namodg_FieldInterface interface. If it does, it runs it. Otherwise
      * it triggers an error.
      * 
      * @param string $function
@@ -298,7 +306,7 @@ class Namodg {
         }
 
         // make the class name, remove the 'add' part
-        $class = 'NamodgField_' . substr($function, 3);
+        $class = 'Namodg_Field_' . substr($function, 3);
 
         // Replace the spaces in the field name with underscores
         if ( preg_match('/\s+/', $arguments[0]) ) {
@@ -315,12 +323,12 @@ class Namodg {
     }
 
     /**
-     * Makes sure the field class implements NamodgField interface, or lets PHP throw an error.
+     * Makes sure the field class implements Namodg_FieldInterface interface, or lets PHP throw an error.
      * This is just a way to stay save. The trick is to use the typecasted parameter.
      *
-     * @param NamodgField $field
+     * @param Namodg_FieldInterface $field
      */
-    private function _addField(NamodgField $field) {
+    private function _addField(Namodg_FieldInterface $field) {
         $this->_fields[$field->getName()] = $field;
     }
 
@@ -342,7 +350,7 @@ class Namodg {
         $this->_attrs = $attrs ? array_merge( $defaults, array_map('trim', $attrs) ) : $defaults;
         
         if ( strtoupper($this->_attrs['method']) !== 'POST' && strtoupper($this->_attrs['method']) !== 'GET' ) {
-            throw new NamodgException('method_not_valid');
+            throw new Namodg_NamodgException('method_not_valid');
         }
     }
 
@@ -373,25 +381,4 @@ class Namodg {
     private function _addValidationError($fieldName, $error) {
         $this->_validationErrors[ $fieldName ] = $error;
     }
-}
-
-/**
- * Namodg Exception 
- * 
- * This is a special exception, because it can provide a string explaning the error if asked to.
- * 
- * @package Namodg
- */
-class NamodgException extends Exception {
-    
-    public function getError() {
-        $errors = array(
-            'no_key' => 'No key is passed to namodg.',
-            'weak_key' => 'The key must be at least 10 characters long.',
-            'method_not_valid' => 'The method configuration must be one of two values: POST or GET.'
-        );
-        
-        return in_array($this->getMessage(), array_flip($errors)) ? $errors [ $this->getMessage() ] : $this->getMessage();
-    }
-        
 }
