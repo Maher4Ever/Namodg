@@ -108,7 +108,7 @@ abstract class Namodg_FieldAbstract implements Namodg_FieldInterface {
      */
     public function getType() {
         $class = get_class($this);
-        return (string)strtolower( substr($class, 13) ); // strlen('Namodg_FieldInterface_') == 13
+        return (string)strtolower( substr($class, strlen('Namodg_Field_') ) );
     }
 
     /**
