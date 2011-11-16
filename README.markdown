@@ -8,7 +8,7 @@ Usage
 
 This is a simple example of usage to render a form with one field using the simple configuration mode:
     
-    require_once 'class.namodg.php';
+    require_once 'lib/Namodg.php';
 
     $form = new Namodg('key_longer_than_10_chars');
     $form
@@ -46,7 +46,7 @@ Namodg has a set of several fields which can be customized to meet users needs.
 Here is an example of a page with 2 fields and their labels. These fields will be auto-validated
 when the form is validated:
     
-    require_once 'class.namodg.php';
+    require_once 'lib/Namodg.php';
     
     $form = new Namodg(array(
         'key' => 'key_longer_than_10_chars',
@@ -78,7 +78,7 @@ Each Namodg field has a validation method based on it's name. That makes process
 
 Here is an example of the `process.php` page:
 
-    require_once 'class.namodg.php';
+    require_once 'lib/Namodg.php';
 
     $form = new Namodg('key_longer_than_10_chars');
     
