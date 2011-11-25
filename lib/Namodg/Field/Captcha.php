@@ -25,7 +25,7 @@ class Namodg_Field_Captcha extends Namodg_FieldAbstract {
     private $_rand1 = NULL;
     private $_rand2 = NULL;
 
-    public function __construct($name, $options = array()) {
+    public function __construct($name = NULL, $options = array()) {
         $this->_addDefaultOptions(array(
             'info' => NULL
         ));

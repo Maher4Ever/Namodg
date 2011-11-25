@@ -22,7 +22,7 @@
  */
 class Namodg_Field_Submit extends Namodg_FieldAbstract {
 
-    public function __construct($name, $value = null, $options = array()) {
+    public function __construct($name = NULL, $value = null, $options = array()) {
         parent::__construct($name, $options);
         $this->setValue(is_null($value) ? $name : $value);
         $this->setOption('send', false);

@@ -55,12 +55,12 @@ abstract class Namodg_FieldAbstract implements Namodg_FieldInterface {
     /**
      * Initialize the field object
      *
-     * @param array $name
+     * @param string $name
      * @param array $options
      */
-    public function __construct($name, $options = array()) {
+    public function __construct($name = NULL, $options = array()) {
         $name = trim($name);
-        $this->_name = empty($name) ? uniqid( $this->getType() . '_' ) : $name;
+        $this->_name = !$name ? uniqid( $this->getType() . '_' ) : $name;
         $this->_addDefaultOptions(array(
             'id' => NULL,
             'class' => NULL,

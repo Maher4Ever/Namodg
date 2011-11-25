@@ -22,7 +22,7 @@
  */
 class Namodg_Field_Select extends Namodg_FieldAbstract {
 
-    public function __construct($name, $options = array()) {
+    public function __construct($name = NULL, $options = array()) {
         $this->_addDefaultOptions(array(
             'options' => array(),
             'empty' => NULL
