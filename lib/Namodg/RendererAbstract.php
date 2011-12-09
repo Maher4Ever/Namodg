@@ -68,7 +68,11 @@ abstract class Namodg_RendererAbstract implements Namodg_RendererInterface {
 
         if ($name == 'id') {
             $this->setID($value);
-        } else {
+        }
+        elseif ($name == 'class') {
+            $this->addClass($value);
+        }
+        else {
             $this->_attrs[$name] = $value;
         }
         

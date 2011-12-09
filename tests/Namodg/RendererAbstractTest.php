@@ -46,4 +46,14 @@ class RendererAbstractTest extends NamodgTestCase {
     
     $mock->addAttr('id', 'my-input');
   }
+
+  public function testAddingClassAsAttrCallsTheClassAddingMethod() {
+    $mock =$this->builder->setMethods(array( 'addClass' ))
+                         ->getMock();
+
+    $mock->expects($this->once())
+         ->method('addClass');
+
+    $mock->addAttr('class', 'highlight');
+  }
 }
