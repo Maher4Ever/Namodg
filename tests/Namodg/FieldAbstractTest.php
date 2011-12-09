@@ -4,14 +4,12 @@ require_once 'tests/TestHelper.php';
 
 class FieldAbstractTest extends NamodgTestCase {
   
-  protected $field;
-
   protected function setUp() {
-    $this->field = $this->getMockForAbstractClass('Namodg_FieldAbstract');
+    $this->subject = $this->getMockForAbstractClass('Namodg_FieldAbstract');
   }
 
   public function testConstructorAutoGeneratesNameWhenPassedNone() {
-    assertAttributeNotEmpty('_name', $this->field);
+    assertAttributeNotEmpty('_name', $this->subject);
   }
 
   public function testConstructorAutoGeneratesNameWhenPassedEmptyOne() {
@@ -19,7 +17,7 @@ class FieldAbstractTest extends NamodgTestCase {
                  ->setConstructorArgs(array( '' ))
                  ->getMockForAbstractClass();
 
-    assertAttributeNotEmpty('_name', $this->field);
+    assertAttributeNotEmpty('_name', $this->subject);
   }
 
   public function testConstructorSetsNameWhenPassedOne() {
@@ -38,7 +36,7 @@ class FieldAbstractTest extends NamodgTestCase {
         'label' => NULL,
         'title' => NULL,
         'send' => TRUE
-      ), '_options', $this->field);
+      ), '_options', $this->subject);
   }
   
   public function testUsingPasseOptionsWhenPassedSome() {
@@ -70,20 +68,28 @@ class FieldAbstractTest extends NamodgTestCase {
   }
 
   public function testSettingValueWorks() {
-    $this->field->setValue('my-value');
+    $this->subject->setValue('my-value');
     
-    assertAttributeEquals('my-value', '_value', $this->field);
+    assertAttributeEquals('my-value', '_value', $this->subject);
   }
   
   public function testGettingValueWorks() {
-    $this->field->setValue('my-value');
+    $this->subject->setValue('my-value');
     
-    assertEquals('my-value', $this->field->getValue());
+    assertEquals('my-value', $this->subject->getValue());
+  }
+
+  public function testGettingTypeWorks() {
+    $stub = $this->getMockBuilder('Namodg_FieldAbstract')
+                 ->setMockClassName('Namodg_Field_TextField')
+                 ->getMockForAbstractClass();
+
+    assertEquals('textfield', $stub->getType());
   }
 
   public function testSettingOptionWorks() {
-    $this->field->setOption('my-option', 'field-1');
-    $options = PHPUnit_Framework_Assert::readAttribute($this->field, '_options');
+    $this->subject->setOption('my-option', 'field-1');
+    $options = PHPUnit_Framework_Assert::readAttribute($this->subject, '_options');
 
     assertArrayHasKey('my-option', $options);
     assertEquals('field-1', $options['my-option']);
@@ -94,9 +100,9 @@ class FieldAbstractTest extends NamodgTestCase {
     $method = $reflection->getMethod('_setValidationError');
     $method->setAccessible(true);
 
-    $method->invokeArgs($this->field, array('my-error'));
+    $method->invokeArgs($this->subject, array('my-error'));
 
-    assertAttributeEquals('my-error', '_validatonError', $this->field);
+    assertAttributeEquals('my-error', '_validatonError', $this->subject);
   }
 
   public function testGettingValidationErrorWorks() {
@@ -104,8 +110,8 @@ class FieldAbstractTest extends NamodgTestCase {
     $method = $reflection->getMethod('_setValidationError');
     $method->setAccessible(true);
 
-    $method->invokeArgs($this->field, array('my-error'));
+    $method->invokeArgs($this->subject, array('my-error'));
 
-    assertEquals('my-error', $this->field->getValidationError());
+    assertEquals('my-error', $this->subject->getValidationError());
   }
 }

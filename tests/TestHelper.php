@@ -13,4 +13,6 @@ spl_autoload_register('autoload_namodg_lib');
 require_once 'PHPUnit/Framework/Assert/Functions.php';
 
 // Extend the standard test-case
-class NamodgTestCase extends  PHPUnit_Framework_Testcase {}
+class NamodgTestCase extends  PHPUnit_Framework_Testcase {
+  protected $subject;
+}
