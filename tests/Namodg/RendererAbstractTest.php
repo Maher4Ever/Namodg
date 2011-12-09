@@ -56,4 +56,50 @@ class RendererAbstractTest extends NamodgTestCase {
 
     $mock->addAttr('class', 'highlight');
   }
+
+  public function testGettingAttrs() {
+    $this->subject->addAttr('title', 'my input');
+
+    assertEquals($this->subject->getAttr('title'), 'my input');
+  }
+
+  public function testGettingAllAttrs() {
+    $this->subject->addAttr('title', 'my input')
+                  ->setID('my-input')
+                  ->addClass('highlight');
+
+    $attrs = $this->subject->getAllAttrs();
+
+    assertArrayHasKey('title', $attrs);
+    assertArrayHasKey('id', $attrs);
+    assertArrayHasKey('class', $attrs);
+
+    assertEquals($attrs['title'], 'my input');
+    assertEquals($attrs['id'], 'my-input');
+    assertEquals($attrs['class'], 'highlight');
+  }
+
+  public function testSettingID() {
+    $this->subject->setID('my-input');
+    $attrs = PHPUnit_Framework_Assert::readAttribute($this->subject, '_attrs');
+
+    assertArrayHasKey('id', $attrs);
+    assertEquals('my-input', $attrs['id']);  
+  }
+
+  public function testAddingClassesWhenNoClassesAreAlreadyAdded() {
+    $this->subject->addClass('highlight');
+    $attrs = PHPUnit_Framework_Assert::readAttribute($this->subject, '_attrs');
+
+    assertArrayHasKey('class', $attrs);
+    assertEquals('highlight', $attrs['class']);     
+  }
+
+  public function testAddingClassesWhenClassesAreAlreadyAdded() {
+    $this->subject->addClass('highlight');
+    $this->subject->addClass('grid_3');
+    $attrs = PHPUnit_Framework_Assert::readAttribute($this->subject, '_attrs');
+
+    assertEquals('highlight grid_3', $attrs['class']);     
+  }
 }
