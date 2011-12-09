@@ -119,7 +119,7 @@ abstract class Namodg_RendererAbstract implements Namodg_RendererInterface {
         if ( isset($this->_attrs['class']) ) {
             $this->_attrs['class'] .= ' ' . $class;
         } else {
-            $this->addAttr('class', $class);
+            $this->_attrs['class'] = $class;
         }
         return $this;
     }
