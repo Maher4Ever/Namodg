@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Namodg - Form Generator 
+ * Namodg - Form Generator
  * ========================
- * 
+ *
  * Namodg is a class which allows to easily create, render, validate and process forms
- * 
+ *
  * @author Maher Sallam <admin@namodg.com>
  * @link http://namodg.com
  * @copyright Copyright (c) 2010-2011, Maher Sallam
@@ -18,7 +18,7 @@
 /**
  * The blueprint of all renderers. It sets the default behavior of render objects. It has extra helper methods
  * like addClass() and setID(). This renderer can be used to render any HTML tag.
- * 
+ *
  * @package Namodg
  * @subpackage Namodg_RendererInterface
  */
@@ -48,7 +48,7 @@ abstract class Namodg_RendererAbstract implements Namodg_RendererInterface {
 
     /**
      * Tag getter
-     * 
+     *
      * @return string
      */
     public function getTag() {
@@ -57,7 +57,7 @@ abstract class Namodg_RendererAbstract implements Namodg_RendererInterface {
 
     /**
      * Adds a new attribute to the attrs array
-     * 
+     *
      * @param string $name
      * @param stinrg $value
      * @return $this Allows chaining
@@ -75,7 +75,7 @@ abstract class Namodg_RendererAbstract implements Namodg_RendererInterface {
         else {
             $this->_attrs[$name] = $value;
         }
-        
+
         return $this;
     }
 
@@ -91,7 +91,7 @@ abstract class Namodg_RendererAbstract implements Namodg_RendererInterface {
 
     /**
      * Returns an array that contains all the tag's attributes
-     * 
+     *
      * @return array
      */
     public function getAllAttrs() {
@@ -100,7 +100,7 @@ abstract class Namodg_RendererAbstract implements Namodg_RendererInterface {
 
     /**
      * Tag ID setter
-     * 
+     *
      * @param string $idValue
      * @return $this Allows chaining
      */

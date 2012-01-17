@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Namodg - Form Generator 
+ * Namodg - Form Generator
  * ========================
- * 
+ *
  * Namodg is a class which allows to easily create, render, validate and process forms
- * 
+ *
  * @author Maher Sallam <admin@namodg.com>
  * @link http://namodg.com
  * @copyright Copyright (c) 2010-2011, Maher Sallam
@@ -17,7 +17,7 @@
 
 /**
  * Namodg Number Field, used for integer data
- * 
+ *
  * @package Namodg
  */
 class Namodg_Field_NumberField extends Namodg_FieldAbstract {
@@ -32,7 +32,7 @@ class Namodg_Field_NumberField extends Namodg_FieldAbstract {
             }
         }
 
-        // Validate the type of the value even if the field is not required 
+        // Validate the type of the value even if the field is not required
         // when it's not empty. Matches 0-9 and Arabic numbers.
         if ( ! empty($value) && ! preg_match( '/^[0-9\x{0660}-\x{0669}]+$/u', $value ) ) {
             $this->_setValidationError('not_number');

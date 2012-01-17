@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Namodg - Form Generator 
+ * Namodg - Form Generator
  * ========================
- * 
+ *
  * Namodg is a class which allows to easily create, render, validate and process forms
- * 
+ *
  * @author Maher Sallam <admin@namodg.com>
  * @link http://namodg.com
  * @copyright Copyright (c) 2010-2011, Maher Sallam
@@ -30,9 +30,9 @@ function __autoload_namodg_component($component) {
 spl_autoload_register('__autoload_namodg_component');
 
 /**
- * Namodg is the main class to interact with the form. It offers an API that allows to 
+ * Namodg is the main class to interact with the form. It offers an API that allows to
  * add fields, maniuplate them, validate them and render the form with or without them.
- * 
+ *
  * @package Namodg
  * @see README.markdown
  */
@@ -42,14 +42,14 @@ class Namodg {
      * Namodg current version
      */
     const version = '1.4';
-    
+
     /**
      * The key is used to encrypt/decrypt data
-     * 
+     *
      * @static string
      */
     private static $_key = NULL;
-    
+
     /**
      * Form Attributes Container
      *
@@ -70,80 +70,80 @@ class Namodg {
      * @var array
      */
     private $_validationErrors = array();
-    
+
     /**
-     * Namodg has a $suppressErrors option. If it's set to true, any fatal error 
+     * Namodg has a $suppressErrors option. If it's set to true, any fatal error
      * will be assigned to the following var.
-     * 
+     *
      * @var string
      */
     private $_fatalError = NULL;
 
     /**
      * Initialize Namodg, this includes validating all configs.
-     * 
+     *
      * @param array $config form config
      * @param boolean $suppressErrors allows developers to handle namodg's fatal errors in any way they want
      */
     public function __construct($config = array(), $suppressErrors = false) {
-        
+
         // Default to showing errors if the passed option is not a boolean
         if ( ! is_bool($suppressErrors) ) {
             $suppressErrors = false;
         }
-        
+
         try {
-            
+
             if ( is_array($config) ) { // Then advanced configuration mode
-                
+
                 if ( ! isset ($config['key']) || empty ($config['key']) ) {
                     throw new Namodg_NamodgException('no_key');
                 } else {
                     self::$_key = $config['key'];
-                }  
-                
+                }
+
                 $this->_setAttrs($config);
-            
+
             } elseif ( is_string($config) ) { // Simple configuration mode
-   
+
                 self::$_key = $config;
                 $this->_setAttrs();
-                
+
             } else { // No configurations
-                
+
                 throw new Namodg_NamodgException('no_key');
-   
+
             }
-            
+
             self::$_key = trim(self::$_key);
-            
+
             // Key should be 10 chars log at least
             if ( empty(self::$_key) || strlen(self::$_key) < 10 ) {
                 throw new Namodg_NamodgException('weak_key');
             }
-                
+
         } catch (Namodg_NamodgException $e) {
-            
+
             if ( $suppressErrors ) {
                 $this->_fatalError = $e->getMessage();
             } else {
                 exit('Namodg error: ' . $e->getError());
             }
-            
+
         }
-        
+
     }
-    
+
     /**
      * Attribute getter method
-     * 
+     *
      * @param string $id
      * @return string
      */
     public function getAttr($id) {
         return $this->_attrs[$id];
     }
-    
+
     /**
      * All attributes getter method
      * @return array
@@ -161,10 +161,10 @@ class Namodg {
     public function getField($name) {
         return $this->_fields[$name];
     }
-    
+
     /**
      * All fields getter method
-     * 
+     *
      * @return array
      */
     public function getFields() {
@@ -173,7 +173,7 @@ class Namodg {
 
     /**
      * This method can be used to check if a Namodg form is submited to a page and it can be processed
-     * 
+     *
      * @return boolean
      */
     public function canBeProcessed() {
@@ -190,45 +190,45 @@ class Namodg {
          * Note: $this->getFields() wasn't used here because empty() doesn't accept function's returns as a param.
          */
         if ( empty($this->_fields) ) {
-            
+
             // We don't want to show errors when something goes wrong, because it will fail and false will be returned!
             $fields = @unserialize($this->_decrypt($method['namodg_fields']));
 
             if ( ! is_array($fields) ) {
                 return false;
             }
-            
+
             // Validate the objects
             foreach ($fields as $field) {
                 if ( ! ($field instanceof Namodg_FieldInterface) ) {
                     return false;
                 }
             }
-            
+
             // Add the fields to this instance (without data)
             $this->_fields = $fields;
         }
-        
+
         // Remove the namodg fields container (saves memory)
         unset($method['namodg_fields']);
-        
+
         // Add sent data to the fields
         foreach ($method as $name => $value) {
             $field = $this->getField($name);
-            
+
             // Only add fields' data and ignore the rest
             if ( $field ) {
                 $field->setValue($value);
             }
         }
-        
+
         // Yes, the form can be processed
         return true;
     }
 
     /**
      * Validates the fields and adds validation errors to thier container
-     * 
+     *
      * @return $this Allows chaining
      */
     public function validate() {
@@ -243,7 +243,7 @@ class Namodg {
     /**
      * Checks to see if there are no validation errors, which means the data is valid.
      * Note: $this->validate() must be run before this one to get the right result!
-     * 
+     *
      * @return boolean
      */
     public function isDataValid() {
@@ -252,7 +252,7 @@ class Namodg {
 
     /**
      * Validation errors getter method
-     * 
+     *
      * @return array
      */
     public function getValidationErrors() {
@@ -261,16 +261,16 @@ class Namodg {
 
     /**
      * Fatal error getter method
-     * 
+     *
      * @return array
      */
     public function getFatalError() {
         return $this->_fatalError;
     }
-    
+
     /**
      * Prints the form HTML when naomdg object is treated as a var
-     * 
+     *
      * @return string the form HTML
      */
     public function __toString() {
@@ -286,14 +286,14 @@ class Namodg {
             $form->addClass( $this->_attrs['class'] );
         }
 
-        return $form->render();  
+        return $form->render();
     }
-    
+
     /**
      * This function allows the addition of fields to the form without instantiating a new object (must implement Namodg_FieldInterface) manually.
      * It tries to check if the called function is a class which implements Namodg_FieldInterface interface. If it does, it runs it. Otherwise
      * it triggers an error.
-     * 
+     *
      * @param string $function
      * @param array $arguments
      * @return $this Allows chaining
@@ -315,10 +315,10 @@ class Namodg {
 
         // Create a new object with unknows arguments
         $field = new ReflectionClass($class);
-        
+
         // Pass the arguments to the class and add it to the fields array
         $this->_addField( $field->newInstanceArgs($arguments) );
-        
+
         return $this;
     }
 
@@ -335,11 +335,11 @@ class Namodg {
     /**
      * Settes the attributes of this form and validates them as well. If no attrs are passed,
      * it used the default attrs. This is handy for the simple configuration mode of Namodg.
-     * 
+     *
      * @param array $attrs
      */
     private function _setAttrs($attrs = NULL) {
-        
+
         $defaults = array (
             'id' => NULL,
             'class' => NULL,
@@ -348,7 +348,7 @@ class Namodg {
         );
 
         $this->_attrs = $attrs ? array_merge( $defaults, array_map('trim', $attrs) ) : $defaults;
-        
+
         if ( strtoupper($this->_attrs['method']) !== 'POST' && strtoupper($this->_attrs['method']) !== 'GET' ) {
             throw new Namodg_NamodgException('method_not_valid');
         }
@@ -374,7 +374,7 @@ class Namodg {
 
     /**
      * Addes validation errors to the errors array
-     * 
+     *
      * @param string $fieldName
      * @param string $error
      */

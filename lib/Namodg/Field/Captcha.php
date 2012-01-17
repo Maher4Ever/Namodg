@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Namodg - Form Generator 
+ * Namodg - Form Generator
  * ========================
- * 
+ *
  * Namodg is a class which allows to easily create, render, validate and process forms
- * 
+ *
  * @author Maher Sallam <admin@namodg.com>
  * @link http://namodg.com
  * @copyright Copyright (c) 2010-2011, Maher Sallam
@@ -17,7 +17,7 @@
 
 /**
  * Namodg Captcha Field, a human-verification field used to stop spam
- * 
+ *
  * @package Namodg
  */
 class Namodg_Field_Captcha extends Namodg_FieldAbstract {
@@ -45,8 +45,8 @@ class Namodg_Field_Captcha extends Namodg_FieldAbstract {
         }
 
         if ( (int)$value !== $this->_getCaptchaAnswer() &&
-             ! $this->_validateArabicNumber($value) 
-           ) 
+             ! $this->_validateArabicNumber($value)
+           )
         {
             $this->_setValidationError('captcha_answer_wrong');
             return false;
@@ -89,24 +89,24 @@ class Namodg_Field_Captcha extends Namodg_FieldAbstract {
     }
 
     private function _validateArabicNumber($arNum) {
-        
+
         // Check if the passed value is actually an Arabic number
         if ( ! preg_match('/^[\x{0660}-\x{0669}]+$/u', $arNum) ) {
             return false;
         }
-        
+
         $answer = (string)$this->_getCaptchaAnswer();
         $pattren = '';
-        
+
         // Convert the answer from ASCCI to Unicode
         for($i = 0, $len = strlen($answer); $i < $len; $i++) {
-            
+
             // Arabic zero in unicode = 0x0660 and Zero in ASCII = 48
             // Our base to convert: 660-48 = 612
             $pattren .= '\x{' . (ord($answer[$i]) + 612 ) . '}';
-            
+
         }
-        
+
         return preg_match('/^' . $pattren . '$/u', $arNum);
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Namodg - Form Generator 
+ * Namodg - Form Generator
  * ========================
- * 
+ *
  * Namodg is a class which allows to easily create, render, validate and process forms
- * 
+ *
  * @author Maher Sallam <admin@namodg.com>
  * @link http://namodg.com
  * @copyright Copyright (c) 2010-2011, Maher Sallam
@@ -17,7 +17,7 @@
 
 /**
  * Namodg Select Field, used for data inside a dropdown
- * 
+ *
  * @package Namodg
  */
 class Namodg_Field_Select extends Namodg_FieldAbstract {
@@ -40,7 +40,7 @@ class Namodg_Field_Select extends Namodg_FieldAbstract {
 
     public function isValid() {
         $value = $this->getValue();
-        
+
         if ($this->getOption('required') && ($value == $this->getOption('default') || empty($value)) ){
             $this->_setValidationError('required');
             return false;

@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Namodg - Form Generator 
+ * Namodg - Form Generator
  * ========================
- * 
+ *
  * Namodg is a class which allows to easily create, render, validate and process forms
- * 
+ *
  * @author Maher Sallam <admin@namodg.com>
  * @link http://namodg.com
  * @copyright Copyright (c) 2010-2011, Maher Sallam
@@ -17,24 +17,24 @@
 
 /**
  * This renders the Namodg Select Field
- * 
+ *
  * @package Namodg
  * @subpackage Namodg_Renderer
  */
 class Namodg_Renderer_SelectRenderer extends Namodg_Renderer_FieldRenderer {
-    
+
     /**
      * Initialize the select field renderer
-     * 
-     * @param Namodg_Field_Select $field 
+     *
+     * @param Namodg_Field_Select $field
      */
     public function __construct(Namodg_Field_Select $field) {
         parent::__construct('select', $field);
     }
-    
+
     /**
      * Renders the select field's HTML
-     * 
+     *
      * @return string
      */
     public function render() {
@@ -78,16 +78,16 @@ class Namodg_Renderer_SelectRenderer extends Namodg_Renderer_FieldRenderer {
                     $options .= "\t" . '<option value="'. $option .'">' . $option . '</option>' . PHP_EOL;
                 }
             }
-            
+
         }
-        
+
         return $selectField . $options . '</select>';
     }
 
     /**
      * This allows to get the closing HTML of the select field.
      * Note: This is used just to confirm to Namodg Spec!
-     * 
+     *
      * @return string
      */
     protected function _getClosingHTML() {

@@ -18,7 +18,7 @@ class RendererAbstractTest extends NamodgTestCase {
 
     $this->subject = $this->getMockBuilder('Namodg_RendererAbstract')
                           ->setConstructorArgs(array( 'input' ))
-                          ->getMockForAbstractClass(); 
+                          ->getMockForAbstractClass();
   }
 
   public function testConstructorSetsTag() {
@@ -34,7 +34,7 @@ class RendererAbstractTest extends NamodgTestCase {
     $attrs = PHPUnit_Framework_Assert::readAttribute($this->subject, '_attrs');
 
     assertArrayHasKey('title', $attrs);
-    assertEquals('my-input', $attrs['title']); 
+    assertEquals('my-input', $attrs['title']);
   }
 
   public function testAddingIdAsAttrCallsTheIdAddingMethod() {
@@ -43,7 +43,7 @@ class RendererAbstractTest extends NamodgTestCase {
 
     $mock->expects($this->once())
          ->method('setID');
-    
+
     $mock->addAttr('id', 'my-input');
   }
 
@@ -84,7 +84,7 @@ class RendererAbstractTest extends NamodgTestCase {
     $attrs = PHPUnit_Framework_Assert::readAttribute($this->subject, '_attrs');
 
     assertArrayHasKey('id', $attrs);
-    assertEquals('my-input', $attrs['id']);  
+    assertEquals('my-input', $attrs['id']);
   }
 
   public function testAddingClassesWhenNoClassesAreAlreadyAdded() {
@@ -92,7 +92,7 @@ class RendererAbstractTest extends NamodgTestCase {
     $attrs = PHPUnit_Framework_Assert::readAttribute($this->subject, '_attrs');
 
     assertArrayHasKey('class', $attrs);
-    assertEquals('highlight', $attrs['class']);     
+    assertEquals('highlight', $attrs['class']);
   }
 
   public function testAddingClassesWhenClassesAreAlreadyAdded() {
@@ -100,6 +100,6 @@ class RendererAbstractTest extends NamodgTestCase {
     $this->subject->addClass('grid_3');
     $attrs = PHPUnit_Framework_Assert::readAttribute($this->subject, '_attrs');
 
-    assertEquals('highlight grid_3', $attrs['class']);     
+    assertEquals('highlight grid_3', $attrs['class']);
   }
 }

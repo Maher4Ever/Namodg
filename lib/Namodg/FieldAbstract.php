@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Namodg - Form Generator 
+ * Namodg - Form Generator
  * ========================
- * 
+ *
  * Namodg is a class which allows to easily create, render, validate and process forms
- * 
+ *
  * @author Maher Sallam <admin@namodg.com>
  * @link http://namodg.com
  * @copyright Copyright (c) 2010-2011, Maher Sallam
@@ -18,7 +18,7 @@
 /**
  * The bluebrint for all Namodg_FieldInterfaces classes.
  * It sets the default behavior of Namodg_FieldInterfaces objects.
- * 
+ *
  * @package Namodg
  */
 abstract class Namodg_FieldAbstract implements Namodg_FieldInterface {
@@ -103,7 +103,7 @@ abstract class Namodg_FieldAbstract implements Namodg_FieldInterface {
 
     /**
      * Field type gette, based on it's name
-     * 
+     *
      * @return string
      */
     public function getType() {
@@ -135,7 +135,7 @@ abstract class Namodg_FieldAbstract implements Namodg_FieldInterface {
 
     /**
      * Field error setter, changes the current field error to the last one
-     * 
+     *
      * @param $errorID
      * @return $this Allows chaining
      */
@@ -146,7 +146,7 @@ abstract class Namodg_FieldAbstract implements Namodg_FieldInterface {
 
     /**
      * Field error getter
-     * 
+     *
      * @return string
      */
     public function getValidationError() {
@@ -155,7 +155,7 @@ abstract class Namodg_FieldAbstract implements Namodg_FieldInterface {
 
     /**
      * Allows to add extra default options
-     * 
+     *
      * @param array $options
      * @return $this Allows chaining
      */

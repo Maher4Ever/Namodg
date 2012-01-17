@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Namodg - Form Generator 
+ * Namodg - Form Generator
  * ========================
- * 
+ *
  * Namodg is a class which allows to easily create, render, validate and process forms
- * 
+ *
  * @author Maher Sallam <admin@namodg.com>
  * @link http://namodg.com
  * @copyright Copyright (c) 2010-2011, Maher Sallam
@@ -16,8 +16,8 @@
  */
 
 /**
- * Set the rules for all renderers. 
- * 
+ * Set the rules for all renderers.
+ *
  * @package Namodg
  * @subpackage Namodg_RendererInterface
  */

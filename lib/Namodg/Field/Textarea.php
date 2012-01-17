@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Namodg - Form Generator 
+ * Namodg - Form Generator
  * ========================
- * 
+ *
  * Namodg is a class which allows to easily create, render, validate and process forms
- * 
+ *
  * @author Maher Sallam <admin@namodg.com>
  * @link http://namodg.com
  * @copyright Copyright (c) 2010-2011, Maher Sallam
@@ -17,7 +17,7 @@
 
 /**
  * Namodg Textarea, used for multi-line string data
- * 
+ *
  * @package Namodg
  */
 class Namodg_Field_Textarea extends Namodg_Field_TextField {

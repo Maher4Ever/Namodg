@@ -1,4 +1,4 @@
-Namodg - Form Generator 
+Namodg - Form Generator
 ========================
 
 Namodg is a PHP class which allows to easily create, render, validate and process forms.
@@ -7,7 +7,7 @@ Usage
 -----
 
 This is a simple example of usage to render a form with one field using the simple configuration mode:
-    
+
     require_once 'lib/Namodg.php';
 
     $form = new Namodg('key_longer_than_10_chars');
@@ -21,7 +21,7 @@ Namodg Modes
 
 ###Simple configuration mode
 
-Simple configuration mode means that Namodg needs only a key to encrypt your data and will use 
+Simple configuration mode means that Namodg needs only a key to encrypt your data and will use
 it's defaults for the rest of the settings.
 
 ###Advanced configuration mode
@@ -45,9 +45,9 @@ Namodg has a set of several fields which can be customized to meet users needs.
 
 Here is an example of a page with 2 fields and their labels. These fields will be auto-validated
 when the form is validated:
-    
+
     require_once 'lib/Namodg.php';
-    
+
     $form = new Namodg(array(
         'key' => 'key_longer_than_10_chars',
         'url' => 'process.php',
@@ -68,7 +68,7 @@ when the form is validated:
         ))
 
         ->addSubmit('Send');
-      
+
      echo $form;
 
 Data Validation
@@ -81,7 +81,7 @@ Here is an example of the `process.php` page:
     require_once 'lib/Namodg.php';
 
     $form = new Namodg('key_longer_than_10_chars');
-    
+
     // Check the data passed to this file. If there is no data or the data
     // can't be decrypted using the key, redirect the user to the homepage.
     if ( ! $form->canBeProcessed() ) {
@@ -96,7 +96,7 @@ Here is an example of the `process.php` page:
         echo 'Your name: ' . $form->getField('Name')->getCleanedValue();
 
     } else {
-        
+
         print_r( $form->getValidationErrors() );
 
     }

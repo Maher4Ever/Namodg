@@ -3,7 +3,7 @@
 require_once 'tests/TestHelper.php';
 
 class FieldAbstractTest extends NamodgTestCase {
-  
+
   protected function setUp() {
     $this->subject = $this->getMockForAbstractClass('Namodg_FieldAbstract');
   }
@@ -38,7 +38,7 @@ class FieldAbstractTest extends NamodgTestCase {
         'send' => TRUE
       ), '_options', $this->subject);
   }
-  
+
   public function testUsingPasseOptionsWhenPassedSome() {
     $options = array(
       'id' => 'field-1',
@@ -69,13 +69,13 @@ class FieldAbstractTest extends NamodgTestCase {
 
   public function testSettingValueWorks() {
     $this->subject->setValue('my-value');
-    
+
     assertAttributeEquals('my-value', '_value', $this->subject);
   }
-  
+
   public function testGettingValueWorks() {
     $this->subject->setValue('my-value');
-    
+
     assertEquals('my-value', $this->subject->getValue());
   }
 

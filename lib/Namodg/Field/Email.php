@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Namodg - Form Generator 
+ * Namodg - Form Generator
  * ========================
- * 
+ *
  * Namodg is a class which allows to easily create, render, validate and process forms
- * 
+ *
  * @author Maher Sallam <admin@namodg.com>
  * @link http://namodg.com
  * @copyright Copyright (c) 2010-2011, Maher Sallam
@@ -17,7 +17,7 @@
 
 /**
  * Namodg Email Field, used for email(string) data
- * 
+ *
  * @package Namodg
  */
 class Namodg_Field_Email extends Namodg_FieldAbstract {
@@ -32,7 +32,7 @@ class Namodg_Field_Email extends Namodg_FieldAbstract {
             }
         }
 
-        // Validate the type of the value even if the field is not required 
+        // Validate the type of the value even if the field is not required
         // when it's not empty
         if ( ! empty($value) && ! filter_var( $value, FILTER_VALIDATE_EMAIL ) ) {
             $this->_setValidationError('email_not_valid');
