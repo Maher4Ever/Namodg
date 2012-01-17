@@ -8,9 +8,9 @@ Usage
 
 This is a simple example of usage to render a form with one field using the simple configuration mode:
 
-    require_once 'lib/Namodg.php';
+    require_once 'lib/namodg.php';
 
-    $form = new Namodg('key_longer_than_10_chars');
+    $form = new Namodg_Form('key_longer_than_10_chars');
     $form
         ->addTextField('Name')
         ->addSubmit('Send');
@@ -29,7 +29,7 @@ it's defaults for the rest of the settings.
 In the simple configuration mode, the form's `action` attribute will be set to the same page.
 If you with to change this, use the advanced configuration mode. Here is an example:
 
-    $form = new Namodg(array(
+    $form = new Namodg_Form(array(
         'key' => 'key_longer_than_10_chars',
         'url' => 'process.php',
         'method' => 'post',
@@ -46,9 +46,9 @@ Namodg has a set of several fields which can be customized to meet users needs.
 Here is an example of a page with 2 fields and their labels. These fields will be auto-validated
 when the form is validated:
 
-    require_once 'lib/Namodg.php';
+    require_once 'lib/namodg.php';
 
-    $form = new Namodg(array(
+    $form = new Namodg_Form(array(
         'key' => 'key_longer_than_10_chars',
         'url' => 'process.php',
         'method' => 'post',
@@ -78,9 +78,9 @@ Each Namodg field has a validation method based on it's name. That makes process
 
 Here is an example of the `process.php` page:
 
-    require_once 'lib/Namodg.php';
+    require_once 'lib/namodg.php';
 
-    $form = new Namodg('key_longer_than_10_chars');
+    $form = new Namodg_Form('key_longer_than_10_chars');
 
     // Check the data passed to this file. If there is no data or the data
     // can't be decrypted using the key, redirect the user to the homepage.

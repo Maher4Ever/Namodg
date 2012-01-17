@@ -15,33 +15,14 @@
  *   @license http://www.gnu.org/licenses/gpl.html
  */
 
-/*
- * Set include path
- */
-set_include_path(dirname( __FILE__ ) . PATH_SEPARATOR . get_include_path());
-
-/*
- * Autoload Componenets
- */
-function __autoload_namodg_component($component) {
-  $path = str_replace('_', '/', $component) . '.php';
-  require_once $path;
-}
-spl_autoload_register('__autoload_namodg_component');
-
 /**
- * Namodg is the main class to interact with the form. It offers an API that allows to
+ * Namodg_Form is the main class to interact with the form. It offers an API that allows to
  * add fields, maniuplate them, validate them and render the form with or without them.
  *
  * @package Namodg
  * @see README.markdown
  */
-class Namodg {
-
-    /**
-     * Namodg current version
-     */
-    const version = '1.4';
+class Namodg_Form {
 
     /**
      * The key is used to encrypt/decrypt data
