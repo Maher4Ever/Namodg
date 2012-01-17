@@ -15,11 +15,12 @@
  *   @license http://www.gnu.org/licenses/gpl.html
  */
 
-// Add 'lib' to the include path
-set_include_path(dirname( __FILE__ ) . PATH_SEPARATOR . get_include_path());
+// Load vendor lib
+require 'vendor/Swift/DependencyContainer.php';
 
-// Load Namodg utility class
-require 'classes/Namodg.php';
-
-// Register Namodg components autoloader
-Namodg::registerAutoload();
+/**
+ * Dependency Injection container.
+ *
+ * @package Namodg
+ */
+class Namodg_DependencyContainer extends Swift_DependencyContainer {}

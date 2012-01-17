@@ -42,7 +42,7 @@ abstract class Namodg {
       return;
     }
 
-    $path = str_replace('_', DIRECTORY_SEPARATOR, $component) . '.php';
+    $path = 'classes/' . str_replace('_', DIRECTORY_SEPARATOR, $component) . '.php';
     require $path;
   }
 
