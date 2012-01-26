@@ -16,18 +16,65 @@
  */
 
 /**
- * Set the rules for all renderers.
+ * A renderer instance can renderer HTML elements
+ * based on the supplied tag and attributes.
+ *
+ * This interface defines the API for all the renderers.
  *
  * @package Namodg
- * @subpackage Namodg_RendererInterface
+ * @subpackage Namodg_Renderer
  */
 interface Namodg_RendererInterface {
 
-    public function getTag();
+  /**
+   * Returns the HTML-tag which wil be rendered.
+   *
+   * @return string
+   */
+  public function getTag();
 
-    public function addAttr($id, $value);
+  /**
+   * Sets an attribute for the HTML element.
+   *
+   * @param string $name Attribute name
+   * @param string $value Attribute value
+   */
+  public function setAttribute($name, $value);
 
-    public function getAttr($id);
+  /**
+   * Returns the value of the given attribute name
+   * if it exists, otherwise a null.
+   *
+   * @param string $name Attribute name
+   * @return mixin The value of the attribute or a null
+   */
+  public function getAttribute($name);
 
-    public function render();
+  /**
+   * Returns a list of all attributes which has been
+   * added to the HTML element.
+   *
+   * @return array The attributes list
+   */
+  public function getAllAttributes();
+
+  /**
+   * Removes an attribute from the HTML element
+   * if it was added, otherwise it won't do anything.
+   *
+   * @param string $name Attribute name
+   */
+  public function removeAttribute($name);
+
+  /**
+   * Clears the attributes list of the HTML element.
+   */
+  public function clearAllAttributes();
+
+  /**
+   * Renders the HTML element.
+   *
+   * @return string The HTML
+   */
+  public function render();
 }
