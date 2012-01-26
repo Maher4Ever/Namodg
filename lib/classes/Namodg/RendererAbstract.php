@@ -16,111 +16,140 @@
  */
 
 /**
- * The blueprint of all renderers. It sets the default behavior of render objects. It has extra helper methods
- * like addClass() and setID(). This renderer can be used to render any HTML tag.
+ * The blueprint of all renderers. It sets the default behavior
+ * of render objects. It has extra helper methods like addClass()
+ * and setID(). This renderer can be used to render any HTML tag.
  *
  * @package Namodg
- * @subpackage Namodg_RendererInterface
+ * @subpackage Namodg_Renderer
  */
 abstract class Namodg_RendererAbstract implements Namodg_RendererInterface {
 
-    /**
-     * HTML Tag container
-     * @var string
-     */
-    private $_tag = NULL;
+  /**
+   * HTML Tag container
+   * @var string
+   */
+  private $_tag = NULL;
 
-    /**
-     * Tag attributes
-     *
-     * @var array
-     */
-    private $_attrs = array();
+  /**
+   * Tag attributes
+   *
+   * @var array
+   */
+  private $_attrs = array();
 
-    /**
-     * Initialize the renderer
-     *
-     * @param string $tag
-     */
-    public function __construct($tag) {
-        $this->_tag = (string)$tag;
+  /**
+   * Initialize the renderer
+   *
+   * @param string $tag
+   */
+  public function __construct($tag) {
+    $this->_tag = (string)$tag;
+  }
+
+  /**
+   * Tag getter
+   *
+   * @return string
+   */
+  public function getTag() {
+    return $this->_tag;
+  }
+
+  /**
+   * Sets an attribute for the HTML element.
+   *
+   * @param string $name Attribute name
+   * @param string $value Attribute value
+   * @return $this Allows chaining
+   */
+  public function setAttribute($name, $value) {
+    $name = strtolower($name);
+
+    if ($name == 'id') {
+      $this->setID($value);
+    }
+    elseif ($name == 'class') {
+      $this->addClass($value);
+    }
+    else {
+      $this->_attrs[$name] = $value;
     }
 
-    /**
-     * Tag getter
-     *
-     * @return string
-     */
-    public function getTag() {
-        return $this->_tag;
+    return $this;
+  }
+
+  /**
+   * Returns the value of the given attribute name
+   * if it exists, otherwise a null.
+   *
+   * @param string $name Attribute name
+   * @return mixin The value of the attribute or a null
+   */
+  public function getAttribute($name) {
+    return isset($this->_attrs[$name]) ? $this->_attrs[$name] : NULL;
+  }
+
+  /**
+   * Returns a list of all attributes which has been
+   * added to the HTML element.
+   *
+   * @return array The attributes list
+   */
+  public function getAllAttributes() {
+    return $this->_attrs;
+  }
+
+  /**
+   * Removes an attribute from the HTML element
+   * if it was added, otherwise it won't do anything.
+   *
+   * @param string $name Attribute name
+   * @return $this Allows chaining
+   */
+  public function removeAttribute($name) {
+    if ( isset($this->_attrs[$name]) ) {
+      unset($this->_attrs[$name]);
     }
 
-    /**
-     * Adds a new attribute to the attrs array
-     *
-     * @param string $name
-     * @param stinrg $value
-     * @return $this Allows chaining
-     */
-    public function addAttr($name, $value) {
+    return $this;
+  }
 
-        $name = strtolower($name);
+  /**
+   * Clears the attributes list of the HTML element.
+   *
+   * @return $this Allows chaining
+   */
+  public function clearAllAttributes() {
+    $this->_attrs = array();
+    return $this;
+  }
 
-        if ($name == 'id') {
-            $this->setID($value);
-        }
-        elseif ($name == 'class') {
-            $this->addClass($value);
-        }
-        else {
-            $this->_attrs[$name] = $value;
-        }
+  /**
+   * Sets the ID attribute for the HTML element.
+   *
+   * @param string $idValue
+   * @return $this Allows chaining
+   */
+  public function setID($idValue) {
+    $this->_attrs['id'] = $idValue;
+    return $this;
+  }
 
-        return $this;
+  /**
+   * Adds a CSS class to the HTML element.
+   *
+   * @param string $class
+   * @return $this Allows chaining
+   */
+  public function addClass($class) {
+    if ( isset($this->_attrs['class']) ) {
+      $this->_attrs['class'] .= ' ' . $class;
+    }
+    else {
+      $this->_attrs['class'] = $class;
     }
 
-    /**
-     * Atrribute getter
-     *
-     * @param string $name
-     * @return string
-     */
-    public function getAttr($name) {
-        return isset($this->_attrs[$name]) ? $this->_attrs[$name] : NULL;
-    }
-
-    /**
-     * Returns an array that contains all the tag's attributes
-     *
-     * @return array
-     */
-    public function getAllAttrs() {
-        return $this->_attrs;
-    }
-
-    /**
-     * Tag ID setter
-     *
-     * @param string $idValue
-     * @return $this Allows chaining
-     */
-    public function setID($idValue) {
-        $this->_attrs['id'] = $idValue;
-        return $this;
-    }
-
-    /**
-     * Adds CSS classes to the tag
-     *
-     * @param string $class
-     * @return $this Allows chaining
-     */
-    public function addClass($class) {
-        if ( isset($this->_attrs['class']) ) {
-            $this->_attrs['class'] .= ' ' . $class;
-        } else {
-            $this->_attrs['class'] = $class;
-        }
-        return $this;
-    }
+    return $this;
+  }
 }
