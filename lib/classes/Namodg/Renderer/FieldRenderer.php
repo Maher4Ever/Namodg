@@ -33,7 +33,10 @@ class Namodg_Renderer_FieldRenderer extends Namodg_RendererAbstract {
   private $_builder;
 
   /**
+   * Initialize the fields renderer
    *
+   * @param DOMDocument $builder
+   * @param string $tag
    */
   public function __construct(DOMDocument $builder, $tag) {
     parent::__construct($tag);
