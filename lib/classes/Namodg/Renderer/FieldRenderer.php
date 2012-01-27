@@ -16,7 +16,7 @@
  */
 
 /**
- * The general renderer for Namodg fields.
+ * The general renderer of Namodg fields.
  *
  * @package Namodg
  * @subpackage Namodg_Renderer
