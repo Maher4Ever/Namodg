@@ -98,14 +98,23 @@ class Namodg_Renderer_FieldRenderer extends Namodg_RendererAbstract {
    * @return string
    */
   public function render() {
-    $field = $this->_builder->createElement($this->getTag());
+    $field = $this->_getBuilder()->createElement($this->getTag());
 
     foreach ($this->getAllAttributes() as $attr => $value) {
       $field->setAttribute($attr, $value);
     }
 
-    $this->_builder->appendChild($field);
+    $this->_getBuilder()->appendChild($field);
 
-    return trim($this->_builder->saveHTML());
+    return trim($this->_getBuilder()->saveHTML());
+  }
+
+  /**
+   * Returns the HTML builder
+   *
+   * @return DOMDocument
+   */
+  protected function _getBuilder() {
+    return $this->_builder;
   }
 }
