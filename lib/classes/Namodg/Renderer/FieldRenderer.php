@@ -16,108 +16,93 @@
  */
 
 /**
- * This is a general field renderer
+ * The general renderer for Namodg fields.
  *
  * @package Namodg
  * @subpackage Namodg_Renderer
  */
 class Namodg_Renderer_FieldRenderer extends Namodg_RendererAbstract {
 
-    /**
-     * Namodg_Field object container
-     *
-     * @var Namodg_FieldAbstract
-     */
-    private $_field = NULL;
+  const VALIDATION_ATTRUBUTE = 'data-namodg-validation';
 
-    /**
-     * Initialize the field renderer
-     *
-     * @param string $tag
-     * @param Namodg_FieldAbstract $field
-     */
-    public function __construct($tag, Namodg_FieldAbstract $field) {
-        parent::__construct($tag);
-        $this->_field = $field;
+  /**
+   * HTML builder
+   *
+   * @var DOMDocument
+   */
+  private $_builder;
+
+  /**
+   *
+   */
+  public function __construct(DOMDocument $builder, $tag) {
+    parent::__construct($tag);
+
+    $this->_builder = $builder;
+  }
+
+  /**
+   * Adds a validation rule to the field.
+   * The validation attribute can be used by client-side languages
+   * to validate the form before the submission.
+   *
+   * @param string $rule
+   * @return $this Allows chaining
+   */
+  public function addValidationRule($rule) {
+    if ( $attr = $this->getAttribute(self::VALIDATION_ATTRUBUTE) ) {
+      $this->setAttribute(self::VALIDATION_ATTRUBUTE, $attr . ' ' . $rule);
+    }
+    else {
+      $this->setAttribute(self::VALIDATION_ATTRUBUTE, $rule);
     }
 
-    /**
-     * Helper method, allows to add validation rules to the field.
-     * The added attr can be used by client-side languages to validate the form before the submission.
-     *
-     * @param string $rule
-     * @return Namodg_Renderer_FieldRenderer
-     */
-    public function addValidationRule($rule) {
-        if ( $this->getAttr('data-validation') ) {
-            $this->addAttr('data-validation', $this->getAttr('data-validation') . ' ' . $rule);
-        } else {
-            $this->addAttr('data-validation', $rule);
-        }
-        return $this;
+    return $this;
+  }
+
+
+  /**
+   * Remove a validation rule from the field only
+   * if it exists.
+   *
+   * @param string $rule
+   * @return $this Allows chaining
+   */
+  public function removeValidationRule($rule) {
+    if ( $attr = $this->getAttribute(self::VALIDATION_ATTRUBUTE) ) {
+      $this->setAttribute(self::VALIDATION_ATTRUBUTE,
+        preg_replace('/' . preg_quote($rule) . '[ ]?/', '', $attr)
+      );
     }
 
-    /**
-     * Renders the field's HTML
-     *
-     * @return string
-     */
-    public function render() {
-        $html = '<' . $this->getTag() . ' ';
+    return $this;
+  }
 
-        $this->addAttr('name', $this->_getField()->getName());
+  /**
+   * Clears all validation rules from the field.
+   *
+   * @return $this Allows chaining
+   */
+  public function clearAllValidationRules() {
+    $this->removeAttribute(self::VALIDATION_ATTRUBUTE);
 
-        if ( $this->_getField()->getOption('id') ) {
-            $this->setID( $this->_getField()->getOption('id') );
-        }
+    return $this;
+  }
 
-        if ( $this->_getField()->getOption('class') ) {
-            $this->addClass( $this->_getField()->getOption('class') );
-        }
+  /**
+   * Renders the field's HTML
+   *
+   * @return string
+   */
+  public function render() {
+    $field = $this->_builder->createElement($this->getTag());
 
-        if ( $this->_getField()->getOption('required') ) {
-            $this->addValidationRule('required');
-        }
-
-        if ( $this->_getField()->getOption('title') ) {
-            $this->addAttr('title', $this->_getField()->getOption('title'));
-        }
-
-        foreach ($this->getAllAttrs() as $attr => $value) {
-            $html .= $attr . '="' . $value . '" ';
-        }
-
-        $html .= $this->_getClosingHTML();
-
-        return $html;
+    foreach ($this->getAllAttributes() as $attr => $value) {
+      $field->setAttribute($attr, $value);
     }
 
-    /**
-     *  Field getter method
-     *
-     * @return Namodg_FieldAbstract
-     */
-    protected function _getField() {
-        return $this->_field;
-    }
+    $this->_builder->appendChild($field);
 
-    /**
-     * This allows to get the closing HTML of the field, based on the tag type.
-     *
-     * @return string
-     */
-    protected function _getClosingHTML() {
-        switch ( $this->getTag() ) {
-            case 'input':
-                return 'value="' . $this->_getField()->getValue() . '">';
-            case 'textarea':
-                return ' cols="30" rows="10">' . $this->_getField()->getValue() . '</textarea>';
-            case 'button':
-                return 'value="' . $this->_getField()->getValue() . '">' . $this->_getField()->getValue() . '</button>';
-            default:
-                return 'value="' . $this->_getField()->getValue() . '">';
-        }
-    }
-
+    return trim($this->_builder->saveHTML());
+  }
 }
-
