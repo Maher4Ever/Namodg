@@ -18,7 +18,7 @@
 /**
  * The blueprint of all renderers. It sets the default behavior
  * of render objects. It has extra helper methods like addClass()
- * and setID(). This renderer can be used to render any HTML tag.
+ * and setId(). This renderer can be used to render any HTML tag.
  *
  * @package Namodg
  * @subpackage Namodg_Renderer
@@ -67,7 +67,7 @@ abstract class Namodg_RendererAbstract implements Namodg_RendererInterface {
     $name = strtolower($name);
 
     if ($name == 'id') {
-      $this->setID($value);
+      $this->setId($value);
     }
     elseif ($name == 'class') {
       $this->addClass($value);
@@ -131,7 +131,7 @@ abstract class Namodg_RendererAbstract implements Namodg_RendererInterface {
    * @param string $idValue
    * @return $this Allows chaining
    */
-  public function setID($idValue) {
+  public function setId($idValue) {
     $this->_attrs['id'] = $idValue;
     return $this;
   }

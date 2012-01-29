@@ -71,13 +71,13 @@ class SelectListRendererTest extends NamodgTestCase {
   }
 
   public function testRenderingWithoutOptions() {
-    $this->subject->setID('dropdown');
+    $this->subject->setId('dropdown');
 
     assertEquals('<select id="dropdown"></select>', $this->subject->render());
   }
 
   public function testRenderingWithOptions() {
-    $this->subject->setID('dropdown')
+    $this->subject->setId('dropdown')
                   ->addOption('test')
                   ->addOption('not test')
                   ->setDefaultOption('please select one')

@@ -32,11 +32,11 @@ class RendererAbstractTest extends NamodgTestCase {
   }
 
   public function testAddingIdAsAttrCallsTheIdAddingMethod() {
-    $mock =$this->builder->setMethods(array( 'setID' ))
+    $mock =$this->builder->setMethods(array( 'setId' ))
                          ->getMock();
 
     $mock->expects($this->once())
-         ->method('setID');
+         ->method('setId');
 
     $mock->setAttribute('id', 'my-input');
   }
@@ -53,7 +53,7 @@ class RendererAbstractTest extends NamodgTestCase {
 
   public function testGettingAllAttrs() {
     $this->subject->setAttribute('title', 'my input')
-                  ->setID('my-input')
+                  ->setId('my-input')
                   ->addClass('highlight');
 
     $attrs = $this->subject->getAllAttributes();
@@ -72,7 +72,7 @@ class RendererAbstractTest extends NamodgTestCase {
 
   public function testClearingAllAttributes() {
     $this->subject->setAttribute('title', 'my input')
-                  ->setID('my-input')
+                  ->setId('my-input')
                   ->addClass('highlight');
 
     $this->subject->clearAllAttributes();
@@ -80,8 +80,8 @@ class RendererAbstractTest extends NamodgTestCase {
     assertEmpty($this->subject->getAllAttributes());
   }
 
-  public function testSettingID() {
-    $this->subject->setID('my-input');
+  public function testSettingId() {
+    $this->subject->setId('my-input');
 
     assertEquals('my-input',$this->subject->getAttribute('id'));
   }
