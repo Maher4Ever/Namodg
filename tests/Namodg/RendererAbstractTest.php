@@ -80,6 +80,19 @@ class RendererAbstractTest extends NamodgTestCase {
     assertEmpty($this->subject->getAllAttributes());
   }
 
+  public function testSettingAndGettingContent() {
+    $this->subject->setContent('my data');
+
+    assertEquals($this->subject->getContent(), 'my data');
+  }
+
+  public function testClearingContent() {
+    $this->subject->setContent('my data');
+    $this->subject->clearContent();
+
+    assertNull($this->subject->getContent());
+  }
+
   public function testSettingId() {
     $this->subject->setId('my-input');
 

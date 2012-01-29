@@ -27,9 +27,17 @@ abstract class Namodg_RendererAbstract implements Namodg_RendererInterface {
 
   /**
    * HTML Tag container
+   *
    * @var string
    */
   private $_tag = NULL;
+
+  /**
+   * The content of the element.
+   *
+   * @var string
+   */
+  private $_content = NULL;
 
   /**
    * Tag attributes
@@ -122,6 +130,37 @@ abstract class Namodg_RendererAbstract implements Namodg_RendererInterface {
    */
   public function clearAllAttributes() {
     $this->_attrs = array();
+    return $this;
+  }
+
+  /**
+   * Sets the content of the HTML element.
+   *
+   * @param string $content The content of the element
+   * @return $this Allows chaining
+   */
+  public function setContent($content) {
+    $this->_content = $content;
+    return $this;
+  }
+
+  /**
+   * Returns the content of the HTML element.
+   *
+   * @return string The element content
+   * @return $this Allows chaining
+   */
+  public function getContent() {
+    return $this->_content;
+  }
+
+  /**
+   * Clears the content from the HTML element.
+   *
+   * @return $this Allows chaining
+   */
+  public function clearContent() {
+    $this->_content = NULL;
     return $this;
   }
 

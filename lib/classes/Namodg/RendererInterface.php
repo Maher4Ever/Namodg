@@ -72,6 +72,25 @@ interface Namodg_RendererInterface {
   public function clearAllAttributes();
 
   /**
+   * Sets the content of the HTML element.
+   *
+   * @param string $content The content of the element
+   */
+  public function setContent($content);
+
+  /**
+   * Returns the content of the HTML element.
+   *
+   * @return string The element content
+   */
+  public function getContent();
+
+  /**
+   * Clears the content from the HTML element.
+   */
+  public function clearContent();
+
+  /**
    * Renders the HTML element.
    *
    * @return string The HTML
