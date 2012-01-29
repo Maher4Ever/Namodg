@@ -16,59 +16,67 @@
  */
 
 /**
- * Set the rules for all Namodg fields. This ensures all Namodg needs will be met from the extensions, but doesn't
- * ensure the returned value.
+ * A field is a model for the data. Data can be assigned,
+ * validated and retrieved.
+ *
+ * This interface defines the API for all Namodg fields.
  *
  * @package Namodg
+ * @subpackage Namodg_Field
  */
 interface Namodg_FieldInterface {
 
-    /**
-     * This should return the name of the the data-holder
-     *
-     * @return string
-     */
-    public function getName();
+  /**
+   * Returns the unique identifier of the field.
+   *
+   * @return string
+   */
+  public function getId();
 
-    /**
-     * This should allow the change the data value
-     *
-     * @param mixin
-     */
-    public function setValue($value);
+  /**
+   * Set the value of the field.
+   *
+   * @param string $value
+   */
+  public function setValue($value);
 
-    /**
-     * This should return the orignial data value
-     *
-     * @return mixin
-     */
-    public function getValue();
+  /**
+   * Returns the value of the field
+   * if it was set, otherwise a null.
+   *
+   * @return mixin
+   */
+  public function getValue();
 
-    /**
-     * This shuold return an escaped and cleaned data value
-     *
-     * @return mixin
-     */
-    public function getCleanedValue();
+  /**
+   * Returns an escaped version of the value
+   * which can safely be used inside HTML.
+   * if the value is not set, an empty string
+   * is returned.
+   *
+   * @return string
+   */
+  public function getHtmlSafeValue();
 
-    /**
-     * This should return the type of the data
-     *
-     * @return string
-     */
-    public function getType();
+  /**
+   * Returns the type of the field.
+   *
+   * @return string
+   */
+  public function getType();
 
-    /**
-     * This should return a boolean indicating the status of the data
-     *
-     * @return boolean
-     */
-    public function isValid();
+  /**
+   * Checks if the value is valid based
+   * on the type of the field.
+   *
+   * @return boolean
+   */
+  public function isValid();
 
-    /**
-     * This should return the value inside a HTML tag
-     *
-     * @return string
-     */
-    public function getHTML();
+  /**
+   * Returns the HTML markup of the field.
+   *
+   * @return string
+   */
+  public function getHtml();
 }
