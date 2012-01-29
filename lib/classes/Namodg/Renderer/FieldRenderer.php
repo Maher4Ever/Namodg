@@ -16,21 +16,12 @@
  */
 
 /**
- * The general renderer of Namodg fields.
+ * The renderer of Namodg fields.
  *
  * @package Namodg
  * @subpackage Namodg_Renderer
  */
-class Namodg_Renderer_FieldRenderer extends Namodg_RendererAbstract {
-
-  const VALIDATION_ATTRUBUTE = 'data-namodg-validation';
-
-  /**
-   * HTML builder
-   *
-   * @var DOMDocument
-   */
-  private $_builder;
+class Namodg_Renderer_FieldRenderer extends Namodg_Renderer_TagRenderer {
 
   /**
    * Initialize the fields renderer
@@ -38,83 +29,38 @@ class Namodg_Renderer_FieldRenderer extends Namodg_RendererAbstract {
    * @param DOMDocument $builder
    * @param string $tag
    */
-  public function __construct(DOMDocument $builder, $tag) {
-    parent::__construct($tag);
-
-    $this->_builder = $builder;
+  public function __construct(DOMDocument $builder) {
+    parent::__construct($builder, 'input');
   }
 
   /**
-   * Adds a validation rule to the field.
-   * The validation attribute can be used by client-side languages
-   * to validate the form before the submission.
+   * Sets the content of the field.
    *
-   * @param string $rule
+   * @param string $content
    * @return $this Allows chaining
    */
-  public function addValidationRule($rule) {
-    if ( $attr = $this->getAttribute(self::VALIDATION_ATTRUBUTE) ) {
-      $this->setAttribute(self::VALIDATION_ATTRUBUTE, $attr . ' ' . $rule);
-    }
-    else {
-      $this->setAttribute(self::VALIDATION_ATTRUBUTE, $rule);
-    }
-
-    return $this;
-  }
-
-
-  /**
-   * Remove a validation rule from the field only
-   * if it exists.
-   *
-   * @param string $rule
-   * @return $this Allows chaining
-   */
-  public function removeValidationRule($rule) {
-    if ( $attr = $this->getAttribute(self::VALIDATION_ATTRUBUTE) ) {
-      $this->setAttribute(self::VALIDATION_ATTRUBUTE,
-        preg_replace('/' . preg_quote($rule) . '[ ]?/', '', $attr)
-      );
-    }
-
+  public function setContent($content) {
+    $this->setAttribute('value', $content);
     return $this;
   }
 
   /**
-   * Clears all validation rules from the field.
-   *
-   * @return $this Allows chaining
-   */
-  public function clearAllValidationRules() {
-    $this->removeAttribute(self::VALIDATION_ATTRUBUTE);
-
-    return $this;
-  }
-
-  /**
-   * Renders the field's HTML
+   * Returns the content of the field.
    *
    * @return string
+   * @return $this Allows chaining
    */
-  public function render() {
-    $field = $this->_getBuilder()->createElement($this->getTag());
-
-    foreach ($this->getAllAttributes() as $attr => $value) {
-      $field->setAttribute($attr, $value);
-    }
-
-    $this->_getBuilder()->appendChild($field);
-
-    return trim($this->_getBuilder()->saveHTML());
+  public function getContent() {
+    return $this->getAttribute('value');
   }
 
   /**
-   * Returns the HTML builder
+   * Clears the content from the field.
    *
-   * @return DOMDocument
+   * @return $this Allows chaining
    */
-  protected function _getBuilder() {
-    return $this->_builder;
+  public function clearContent() {
+    $this->removeAttribute('value');
+    return $this;
   }
 }

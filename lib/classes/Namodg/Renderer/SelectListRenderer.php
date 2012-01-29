@@ -21,7 +21,7 @@
  * @package Namodg
  * @subpackage Namodg_Renderer
  */
-class Namodg_Renderer_SelectListRenderer extends Namodg_Renderer_FieldRenderer {
+class Namodg_Renderer_SelectListRenderer extends Namodg_Renderer_TagRenderer {
 
   /**
    * The default option for the select list.
