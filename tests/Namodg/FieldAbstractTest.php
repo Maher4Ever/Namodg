@@ -4,108 +4,72 @@ require_once 'tests/TestHelper.php';
 
 class FieldAbstractTest extends NamodgTestCase {
 
+  protected $rendererMock;
+
+  protected $fieldBuilder;
+
   protected function setUp() {
-    $this->subject = $this->getMockForAbstractClass('Namodg_FieldAbstract');
+    $this->rendererMock = $this->getMockBuilder('Namodg_Renderer_FieldRenderer')
+                               ->setConstructorArgs(array(
+                                 new DOMDocument('1.0'), 'input'
+                               ))
+                               ->getMock();
+
+    $this->fieldBuilder = $this->getMockBuilder('Namodg_FieldAbstract');
+
+    $this->subject = $this->fieldBuilder
+                          ->setConstructorArgs(array( $this->rendererMock ))
+                          ->getMockForAbstractClass();
   }
 
-  public function testConstructorAutoGeneratesNameWhenPassedNone() {
-    assertAttributeNotEmpty('_name', $this->subject);
-  }
-
-  public function testConstructorAutoGeneratesNameWhenPassedEmptyOne() {
-    $stub = $this->getMockBuilder('Namodg_FieldAbstract')
-                 ->setConstructorArgs(array( '' ))
-                 ->getMockForAbstractClass();
-
-    assertAttributeNotEmpty('_name', $this->subject);
+  public function testConstructorAutoGeneratesIdWhenPassedNone() {
+    assertNotEmpty($this->subject->getId());
   }
 
   public function testConstructorSetsNameWhenPassedOne() {
-    $stub = $this->getMockBuilder('Namodg_FieldAbstract')
-                 ->setConstructorArgs(array( 'email' ))
-                 ->getMockForAbstractClass();
-
-    assertAttributeEquals('email', '_name', $stub);
+    $stub = $this->_mockFieldWithId('email');
+    assertEquals('email', $stub->getId());
   }
 
-  public function testUsingDefaultOptionsWhenPassedNone() {
-    assertAttributeEquals(array(
-        'id' => NULL,
-        'class' => NULL,
-        'required' => FALSE,
-        'label' => NULL,
-        'title' => NULL,
-        'send' => TRUE
-      ), '_options', $this->subject);
+  public function testConstructorSetsDefaultMetaDataWhenPassedNone() {
+    assertEquals(array(
+      'required' => FALSE,
+      'send'     => TRUE
+    ), $this->subject->getMetaData());
   }
 
-  public function testUsingPasseOptionsWhenPassedSome() {
-    $options = array(
-      'id' => 'field-1',
-      'class' => 'field grid-4'
+  public function testConstructorSetsMetaDataWhenPassedOne() {
+    $meta = array(
+      'required' => TRUE,
+      'send'     => FALSE
     );
 
-    $stub = $this->getMockBuilder('Namodg_FieldAbstract')
-                 ->setConstructorArgs(array(NULL, $options))
-                 ->getMockForAbstractClass();
+    $stub = $this->_mockFieldWithMeta($meta);
 
-    assertAttributeEquals(array(
-        'id' => 'field-1',
-        'class' => 'field grid-4',
-        'required' => FALSE,
-        'label' => NULL,
-        'title' => NULL,
-        'send' => TRUE
-      ), '_options', $stub);
+    assertEquals($meta, $stub->getMetaData());
   }
 
-  public function testGettingNameWorks() {
-    $stub = $this->getMockBuilder('Namodg_FieldAbstract')
-                 ->setConstructorArgs(array( 'email' ))
-                 ->getMockForAbstractClass();
-
-    assertEquals('email', $stub->getName());
-  }
-
-  public function testSettingValueWorks() {
-    $this->subject->setValue('my-value');
-
-    assertAttributeEquals('my-value', '_value', $this->subject);
-  }
-
-  public function testGettingValueWorks() {
+  public function testSettingAndGettingValues() {
     $this->subject->setValue('my-value');
 
     assertEquals('my-value', $this->subject->getValue());
   }
 
-  public function testGettingTypeWorks() {
-    $stub = $this->getMockBuilder('Namodg_FieldAbstract')
+  public function testGettingType() {
+    $stub = $this->fieldBuilder
                  ->setMockClassName('Namodg_Field_TextField')
                  ->getMockForAbstractClass();
 
     assertEquals('textfield', $stub->getType());
   }
 
-  public function testSettingOptionWorks() {
-    $this->subject->setOption('my-option', 'field-1');
-    $options = PHPUnit_Framework_Assert::readAttribute($this->subject, '_options');
+  public function testSettingAndGettingMetaAttributes() {
+    $this->subject->setMetaAttribute('important', 'yes');
 
-    assertArrayHasKey('my-option', $options);
-    assertEquals('field-1', $options['my-option']);
+    assertEquals('yes', $this->subject->getMetaAttribute('important'));
   }
 
-  public function testSettingValidationErrorWorks() {
-    $reflection = new ReflectionClass('Namodg_FieldAbstract');
-    $method = $reflection->getMethod('_setValidationError');
-    $method->setAccessible(true);
-
-    $method->invokeArgs($this->subject, array('my-error'));
-
-    assertAttributeEquals('my-error', '_validatonError', $this->subject);
-  }
-
-  public function testGettingValidationErrorWorks() {
+  public function testSettingAndGettingValidationError() {
     $reflection = new ReflectionClass('Namodg_FieldAbstract');
     $method = $reflection->getMethod('_setValidationError');
     $method->setAccessible(true);
@@ -113,5 +77,31 @@ class FieldAbstractTest extends NamodgTestCase {
     $method->invokeArgs($this->subject, array('my-error'));
 
     assertEquals('my-error', $this->subject->getValidationError());
+  }
+
+  public function testGettingHtml() {
+    $this->subject->setMetaAttribute('required', true);
+
+    $this->rendererMock->expects($this->once())
+                       ->method('setAttribute')
+                       ->with('name', $this->subject->getId());
+
+    $this->rendererMock->expects($this->once())
+                       ->method('addValidationRule')
+                       ->with('required');
+
+    $this->subject->getHtml();
+  }
+
+  private function _mockFieldWithId($id) {
+    return $this->fieldBuilder
+                ->setConstructorArgs(array( $this->rendererMock, $id ))
+                ->getMockForAbstractClass();
+  }
+
+  private function _mockFieldWithMeta($meta) {
+    return $this->fieldBuilder
+                ->setConstructorArgs(array( $this->rendererMock, NULL, $meta ))
+                ->getMockForAbstractClass();
   }
 }
