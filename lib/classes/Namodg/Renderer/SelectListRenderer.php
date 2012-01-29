@@ -58,6 +58,39 @@ class Namodg_Renderer_SelectListRenderer extends Namodg_Renderer_TagRenderer {
   }
 
   /**
+   * Sets the content of the field.
+   *
+   * @throws BadMethodCallException
+   */
+  public function setContent($content) {
+    throw new BadMethodCallException (
+      'Select lists does not have a content. Use the addOption() method to add option nodes.'
+    );
+  }
+
+  /**
+   * Returns the content of the field.
+   *
+   * @throws BadMethodCallException
+   */
+  public function getContent() {
+    throw new BadMethodCallException (
+      'Select lists does not have a content. Use the getAllOptions() method to get the list of option nodes.'
+    );
+  }
+
+  /**
+   * Clears the content from the field.
+   *
+   * @throws BadMethodCallException
+   */
+  public function clearContent() {
+    throw new BadMethodCallException (
+      'Select lists does not have a content. Use the clearAllOptions() method to clear the list of option nodes.'
+    );
+  }
+
+  /**
    * Adds an option to the select list.
    *
    * @param string $value
@@ -173,7 +206,7 @@ class Namodg_Renderer_SelectListRenderer extends Namodg_Renderer_TagRenderer {
   public function clearAllOptions() {
     $this->_options = array();
     $this->clearDefaultOption()
-      ->clearSelectedOption();
+         ->clearSelectedOption();
 
     return $this;
   }
