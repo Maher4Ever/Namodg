@@ -9,6 +9,8 @@ Usage
 This is a simple example of usage to render a form with one field using the simple configuration mode:
 
 ```php
+<?php
+
 require_once 'lib/namodg_init.php';
 
 $form = Namodg::newForm('key_longer_than_10_chars');
@@ -16,6 +18,8 @@ $form
     ->addTextField('Name')
     ->addSubmit('Send');
 echo $form;
+
+?>
 ```
 
 Namodg Modes
@@ -32,12 +36,16 @@ In the simple configuration mode, the form's `action` attribute will be set to t
 If you with to change this, use the advanced configuration mode. Here is an example:
 
 ```php
+<?php
+
 $form = Namodg::newForm(array(
     'key' => 'key_longer_than_10_chars',
     'url' => 'process.php',
     'method' => 'post',
     'id' => 'contact-form'
 ));
+
+?>
 ```
 
 Now the `action` attribute will be set to `process.php`
@@ -51,6 +59,8 @@ Here is an example of a page with 2 fields and their labels. These fields will b
 when the form is validated:
 
 ```php
+<?php
+
 require_once 'lib/namodg_init.php';
 
 $form = Namodg::newForm(array(
@@ -75,6 +85,8 @@ $form
     ->addSubmit('Send');
 
 echo $form;
+
+?>
 ```
 
 Data Validation
@@ -85,6 +97,8 @@ Each Namodg field has a validation method based on it's name. That makes process
 Here is an example of the `process.php` page:
 
 ```php
+<?php
+
 require_once 'lib/namodg_init.php';
 
 $form = Namodg::newForm('key_longer_than_10_chars');
@@ -107,4 +121,6 @@ if ( $form->isDataValid() ) {
     print_r( $form->getValidationErrors() );
 
 }
+
+?>
 ```
