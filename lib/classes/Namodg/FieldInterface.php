@@ -71,7 +71,7 @@ interface Namodg_FieldInterface {
    *
    * @return boolean
    */
-  public function isValid();
+  public function isValueValid();
 
   /**
    * Returns the HTML markup of the field.

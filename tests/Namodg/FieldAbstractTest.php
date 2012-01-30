@@ -69,6 +69,44 @@ class FieldAbstractTest extends NamodgTestCase {
     assertEquals('yes', $this->subject->getMetaAttribute('important'));
   }
 
+  public function testAbstractFieldsHaveNoValidationsByDefault() {
+    assertEmpty($this->subject->getAllValidations());
+  }
+
+  public function testThatTheValueIsValidByDefault() {
+    assertTrue($this->subject->isValueValid());
+  }
+
+  public function testAddingAndGettingValidations() {
+    $validation = new Namodg_Validation_RequiredValidation;
+    $this->subject->addValidation($validation);
+
+    assertContains($validation, $this->subject->getAllValidations());
+  }
+
+  public function testValidatingTheValueUsingValidations() {
+    $this->subject->addValidation(new Namodg_Validation_RequiredValidation);
+
+    assertFalse($this->subject->isValueValid());
+
+    $this->subject->setValue('test');
+
+    assertTrue($this->subject->isValueValid());
+  }
+
+  public function testWhenValidationsFailTheErrorGetsSet() {
+    $this->subject->addValidation(new Namodg_Validation_RequiredValidation)
+                  ->addValidation(new Namodg_Validation_EmailValidation)
+                  ->isValueValid();
+
+    assertEquals('required', $this->subject->getValidationError());
+
+    $this->subject->setValue('not an email')
+                  ->isValueValid();
+
+    assertEquals('email_not_valid', $this->subject->getValidationError());
+  }
+
   public function testSettingAndGettingValidationError() {
     $reflection = new ReflectionClass('Namodg_FieldAbstract');
     $method = $reflection->getMethod('_setValidationError');

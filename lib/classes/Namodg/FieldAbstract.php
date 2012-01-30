@@ -56,6 +56,13 @@ abstract class Namodg_FieldAbstract implements Namodg_FieldInterface {
   );
 
   /**
+   * Validation objects container.
+   *
+   * @var array
+   */
+  private $_validations = array();
+
+  /**
    * Field validation error.
    *
    * @see $this->_setValidationError()
@@ -151,18 +158,39 @@ abstract class Namodg_FieldAbstract implements Namodg_FieldInterface {
   }
 
   /**
-   * Returns the HTML markup of the field.
+   * Adds a validation object to the field.
    *
-   * @return string
+   * @param Namodg_ValidationInterface $validation
+   * @return $this Allows chaining
    */
-  public function getHtml() {
-    $this->_getRenderer()->setAttribute('name', $this->getId());
+  public function addValidation(Namodg_ValidationInterface $validation) {
+    $this->_validations[] = $validation;
+    return $this;
+  }
 
-    if ( $this->getMetaAttribute('required') ) {
-      $this->_getRenderer()->addValidationRule('required');
+  /**
+   * Returns a list of all validations added to the field.
+   *
+   * @return array
+   */
+  public function getAllValidations() {
+    return $this->_validations;
+  }
+
+  /**
+   * Checks if the value is valid by
+   * running it on all validations.
+   *
+   * @return boolean
+   */
+  public function isValueValid() {
+    foreach($this->_validations as $validation) {
+      if ( ! $validation->isValid($this->getValue()) ) {
+        $this->_setValidationError($validation->getMessage());
+        return false;
+      }
     }
-
-    return $this->_getRenderer()->render();
+    return true;
   }
 
   /**
@@ -183,6 +211,21 @@ abstract class Namodg_FieldAbstract implements Namodg_FieldInterface {
    */
   public function getValidationError() {
     return $this->_validatonError;
+  }
+
+  /**
+   * Returns the HTML markup of the field.
+   *
+   * @return string
+   */
+  public function getHtml() {
+    $this->_getRenderer()->setAttribute('name', $this->getId());
+
+    if ( $this->getMetaAttribute('required') ) {
+      $this->_getRenderer()->addValidationRule('required');
+    }
+
+    return $this->_getRenderer()->render();
   }
 
   /**
