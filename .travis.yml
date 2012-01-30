@@ -1,0 +1,7 @@
+language: php
+phps:
+  - 5.2
+  - 5.3
+notifications:
+  email:
+    - maher@sallam.me
