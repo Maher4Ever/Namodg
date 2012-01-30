@@ -15,12 +15,28 @@
  *   @license http://www.gnu.org/licenses/gpl.html
  */
 
+/**
+ * The "required" validation ensures that a given
+ * value is filled and not empty.
+ *
+ * @package Namodg
+ * @subpackage Namodg_Validation
+ */
 class Namodg_Validation_RequiredValidation extends Namodg_ValidationAbstract {
 
+  /**
+   * Initialize the Validation
+   */
   public function __construct() {
     $this->_setMessage('required');
   }
 
+  /**
+   * Validates a given value and returns the result.
+   *
+   * @param string $value
+   * @return boolean
+   */
   public function isValid($value) {
     $value = trim($value);
     return $this->isValidateable($value) && ! empty($value);
