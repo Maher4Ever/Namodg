@@ -8,13 +8,15 @@ Usage
 
 This is a simple example of usage to render a form with one field using the simple configuration mode:
 
-    require_once 'lib/namodg.php';
+```php
+require_once 'lib/namodg_init.php';
 
-    $form = new Namodg_Form('key_longer_than_10_chars');
-    $form
-        ->addTextField('Name')
-        ->addSubmit('Send');
-    echo $form;
+$form = Namodg::newForm('key_longer_than_10_chars');
+$form
+    ->addTextField('Name')
+    ->addSubmit('Send');
+echo $form;
+```
 
 Namodg Modes
 ------------
@@ -29,12 +31,14 @@ it's defaults for the rest of the settings.
 In the simple configuration mode, the form's `action` attribute will be set to the same page.
 If you with to change this, use the advanced configuration mode. Here is an example:
 
-    $form = new Namodg_Form(array(
-        'key' => 'key_longer_than_10_chars',
-        'url' => 'process.php',
-        'method' => 'post',
-        'id' => 'contact-form'
-    ));
+```php
+$form = Namodg::newForm(array(
+    'key' => 'key_longer_than_10_chars',
+    'url' => 'process.php',
+    'method' => 'post',
+    'id' => 'contact-form'
+));
+```
 
 Now the `action` attribute will be set to `process.php`
 
@@ -46,30 +50,32 @@ Namodg has a set of several fields which can be customized to meet users needs.
 Here is an example of a page with 2 fields and their labels. These fields will be auto-validated
 when the form is validated:
 
-    require_once 'lib/namodg.php';
+```php
+require_once 'lib/namodg_init.php';
 
-    $form = new Namodg_Form(array(
-        'key' => 'key_longer_than_10_chars',
-        'url' => 'process.php',
-        'method' => 'post',
-        'id' => 'contact-form'
-    ));
+$form = Namodg::newForm(array(
+    'key' => 'key_longer_than_10_chars',
+    'url' => 'process.php',
+    'method' => 'post',
+    'id' => 'contact-form'
+));
 
-    $form
-        ->addTextField('Name', array(
-            'required' => true,
-            'label' => 'Your name:'
-        ))
+$form
+    ->addTextField('Name', array(
+        'required' => true,
+        'label' => 'Your name:'
+    ))
 
-        ->addEmail('Email', array(
-            'required' => true,
-            'id' => 'email',
-            'label' => 'Your email:'
-        ))
+    ->addEmail('Email', array(
+        'required' => true,
+        'id' => 'email',
+        'label' => 'Your email:'
+    ))
 
-        ->addSubmit('Send');
+    ->addSubmit('Send');
 
-     echo $form;
+echo $form;
+```
 
 Data Validation
 ---------------
@@ -78,25 +84,27 @@ Each Namodg field has a validation method based on it's name. That makes process
 
 Here is an example of the `process.php` page:
 
-    require_once 'lib/namodg.php';
+```php
+require_once 'lib/namodg_init.php';
 
-    $form = new Namodg_Form('key_longer_than_10_chars');
+$form = Namodg::newForm('key_longer_than_10_chars');
 
-    // Check the data passed to this file. If there is no data or the data
-    // can't be decrypted using the key, redirect the user to the homepage.
-    if ( ! $form->canBeProcessed() ) {
-        header('Location: index.php');
-    }
+// Check the data passed to this file. If there is no data or the data
+// can't be decrypted using the key, redirect the user to the homepage.
+if ( ! $form->canBeProcessed() ) {
+    header('Location: index.php');
+}
 
-    $form->validate();
+$form->validate();
 
-    if ( $form->isDataValid() ) {
+if ( $form->isDataValid() ) {
 
-        // Use the valid data, ex:
-        echo 'Your name: ' . $form->getField('Name')->getCleanedValue();
+    // Use the valid data, ex:
+    echo 'Your name: ' . $form->getField('Name')->getCleanedValue();
 
-    } else {
+} else {
 
-        print_r( $form->getValidationErrors() );
+    print_r( $form->getValidationErrors() );
 
-    }
+}
+```
