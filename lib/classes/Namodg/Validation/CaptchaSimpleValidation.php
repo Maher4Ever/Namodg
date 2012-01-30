@@ -41,7 +41,7 @@ class Namodg_Validation_CaptchaSimpleValidation extends Namodg_ValidationAbstrac
    */
   private $_yang = NULL;
 
-    /**
+  /**
    * Initialize the Validation
    */
   public function __construct() {
@@ -50,7 +50,7 @@ class Namodg_Validation_CaptchaSimpleValidation extends Namodg_ValidationAbstrac
     $this->_setMessage('captcha_answer_wrong');
   }
 
-    /**
+  /**
    * Validates a given value and returns the result.
    *
    * @param string $value
