@@ -1,7 +1,8 @@
 language: php
-phps:
+php:
   - 5.2
   - 5.3
+script: phpunit tests
 notifications:
   email:
     - maher@sallam.me
