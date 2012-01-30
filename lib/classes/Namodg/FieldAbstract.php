@@ -51,7 +51,6 @@ abstract class Namodg_FieldAbstract implements Namodg_FieldInterface {
    * @var array
    */
   private $_meta = array(
-    'required' => FALSE,
     'send'     => TRUE
   );
 
@@ -194,6 +193,21 @@ abstract class Namodg_FieldAbstract implements Namodg_FieldInterface {
   }
 
   /**
+   * Checks if the field is set to
+   * be a required field.
+   *
+   * @return boolean
+   */
+  public function isRequired() {
+    foreach($this->_validations as $validation) {
+      if ( $validation instanceof Namodg_Validation_RequiredValidation ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * Sets the validation error for the field.
    *
    * @param string $error
@@ -221,7 +235,7 @@ abstract class Namodg_FieldAbstract implements Namodg_FieldInterface {
   public function getHtml() {
     $this->_getRenderer()->setAttribute('name', $this->getId());
 
-    if ( $this->getMetaAttribute('required') ) {
+    if ( $this->isRequired() ) {
       $this->_getRenderer()->addValidationRule('required');
     }
 

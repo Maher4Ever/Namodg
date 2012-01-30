@@ -33,14 +33,12 @@ class FieldAbstractTest extends NamodgTestCase {
 
   public function testConstructorSetsDefaultMetaDataWhenPassedNone() {
     assertEquals(array(
-      'required' => FALSE,
       'send'     => TRUE
     ), $this->subject->getMetaData());
   }
 
   public function testConstructorSetsMetaDataWhenPassedOne() {
     $meta = array(
-      'required' => TRUE,
       'send'     => FALSE
     );
 
@@ -117,8 +115,14 @@ class FieldAbstractTest extends NamodgTestCase {
     assertEquals('my-error', $this->subject->getValidationError());
   }
 
+  public function testFieldRequireness() {
+    assertFalse($this->subject->isRequired());
+    $this->subject->addValidation(new Namodg_Validation_RequiredValidation);
+    assertTrue($this->subject->isRequired());
+  }
+
   public function testGettingHtml() {
-    $this->subject->setMetaAttribute('required', true);
+    $this->subject->addValidation(new Namodg_Validation_RequiredValidation);
 
     $this->rendererMock->expects($this->once())
                        ->method('setAttribute')
