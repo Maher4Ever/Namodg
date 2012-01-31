@@ -49,6 +49,14 @@ interface Namodg_FieldInterface {
   public function getValue();
 
   /**
+   * Returns a sanitized version of the value
+   * which safely can be saved in a database.
+   *
+   * @return string
+   */
+  public function getSanitizedValue();
+
+  /**
    * Returns an escaped version of the value
    * which can safely be used inside HTML.
    * if the value is not set, an empty string
