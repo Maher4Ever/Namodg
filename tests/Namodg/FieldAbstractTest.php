@@ -9,7 +9,7 @@ class FieldAbstractTest extends NamodgTestCase {
   protected $fieldBuilder;
 
   protected function setUp() {
-    $this->rendererMock = $this->getMockBuilder('Namodg_Renderer_FieldRenderer')
+    $this->rendererMock = $this->getMockBuilder('Namodg_Renderer_ElementRenderer')
                                ->setConstructorArgs(array(
                                  new DOMDocument('1.0'), 'input'
                                ))

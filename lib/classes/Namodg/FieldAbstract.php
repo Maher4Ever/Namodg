@@ -27,7 +27,7 @@ abstract class Namodg_FieldAbstract implements Namodg_FieldInterface {
   /**
    * Field HTML renderer.
    *
-   * @var Namodg_Renderer_FieldRenderer
+   * @var Namodg_Renderer_ElementRenderer
    */
   private $_renderer = NULL;
 
