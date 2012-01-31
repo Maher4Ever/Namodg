@@ -60,34 +60,31 @@ class Namodg_Renderer_SelectListRenderer extends Namodg_Renderer_ElementRenderer
   /**
    * Sets the content of the field.
    *
-   * @throws BadMethodCallException
+   * @param string $content
+   * @return $this Allows chaining
    */
   public function setContent($content) {
-    throw new BadMethodCallException (
-      'Select lists does not have a content. Use the addOption() method to add option nodes.'
-    );
+    $this->setSelectedOption($content);
+    return $this;
   }
 
   /**
    * Returns the content of the field.
    *
-   * @throws BadMethodCallException
+   * @return $this Allows chaining
    */
   public function getContent() {
-    throw new BadMethodCallException (
-      'Select lists does not have a content. Use the getAllOptions() method to get the list of option nodes.'
-    );
+    return $this->getSelectedOption();
   }
 
   /**
    * Clears the content from the field.
    *
-   * @throws BadMethodCallException
+   * @return $this Allows chaining
    */
   public function clearContent() {
-    throw new BadMethodCallException (
-      'Select lists does not have a content. Use the clearAllOptions() method to clear the list of option nodes.'
-    );
+    $this->clearSelectedOption();
+    return $this;
   }
 
   /**

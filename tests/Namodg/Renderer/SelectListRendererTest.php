@@ -76,6 +76,17 @@ class SelectListRendererTest extends NamodgTestCase {
     assertEquals('<select id="dropdown"></select>', $this->subject->render());
   }
 
+  public function testThatContentIsTheSameAsTheSelectedOption() {
+    $this->subject->setContent('test');
+
+    assertSame($this->subject->getContent(), $this->subject->getSelectedOption());
+
+    $this->subject->clearContent();
+
+    assertNull($this->subject->getSelectedOption());
+  }
+
+
   public function testRenderingWithOptions() {
     $this->subject->setId('dropdown')
                   ->addOption('test')
