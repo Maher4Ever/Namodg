@@ -45,13 +45,4 @@ class Namodg_Field_Textarea extends Namodg_FieldAbstract {
     return filter_var($this->getValue(), FILTER_SANITIZE_STRING);
   }
 
-  /**
-   * Returns the HTML markup of the field.
-   *
-   * @return string
-   */
-  public function getHtml() {
-    return Namodg_FieldAbstract::getHtml();
-  }
-
 }
