@@ -91,6 +91,6 @@ class SelectListRendererTest extends NamodgTestCase {
 </select>
 HTML;
 
-    assertEquals(preg_replace('/(>)[ \n\t]+/', '\1', $result), $this->subject->render());
+    assertEquals($this->_stripWhitespace($result), $this->subject->render());
   }
 }
