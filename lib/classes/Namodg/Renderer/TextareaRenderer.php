@@ -27,7 +27,6 @@ class Namodg_Renderer_TextareaRenderer extends Namodg_Renderer_ElementRenderer {
    * Initialize the fields renderer
    *
    * @param DOMDocument $builder
-   * @param string $tag
    */
   public function __construct(DOMDocument $builder) {
     parent::__construct($builder, 'textarea');
