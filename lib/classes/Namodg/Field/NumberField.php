@@ -16,41 +16,53 @@
  */
 
 /**
- * Namodg Number Field, used for integer data
+ * Namodg number field is used to reperesent
+ * a HTML numeric input in PHP.
  *
  * @package Namodg
+ * @subpackage Namodg_Field
  */
 class Namodg_Field_NumberField extends Namodg_FieldAbstract {
 
-    public function isValid() {
-        $value = $this->getValue();
+  /**
+   * Initialize the field.
+   *
+   * @param Namodg_Validation_NumericArabicValidation $validation
+   * @param Namodg_Renderer_FieldRenderer $renderer
+   * @param string $id
+   * @param array $metaData
+   */
+  public function __construct(
+    Namodg_Validation_NumericArabicValidation $validation,
+    Namodg_Renderer_FieldRenderer $renderer,
+    $id = NULL,
+    array $metaData = array()
+  ) {
+    parent::__construct($renderer, $id, $metaData);
+    $this->addValidation($validation);
+  }
 
-        if ($this->getOption('required')) {
-            if ( empty($value) ) {
-                $this->_setValidationError('required');
-                return false;
-            }
-        }
 
-        // Validate the type of the value even if the field is not required
-        // when it's not empty. Matches 0-9 and Arabic numbers.
-        if ( ! empty($value) && ! preg_match( '/^[0-9\x{0660}-\x{0669}]+$/u', $value ) ) {
-            $this->_setValidationError('not_number');
-            return false;
-        }
+  /**
+   * Returns a sanitized version of the value
+   * which safely can be saved in a database.
+   *
+   * @return string
+   */
+  public function getSanitizedValue() {
+    return filter_var($this->getValue(), FILTER_SANITIZE_NUMBER_INT);
+  }
 
-        return true;
-    }
-
-    public function getCleanedValue() {
-        return filter_var( $this->getValue(), FILTER_SANITIZE_NUMBER_INT );
-    }
-
-    public function getHTML() {
-        $field = new Namodg_Renderer_FieldRenderer('input', $this);
-        $field->addAttr('type', 'text');
-        $field->addValidationRule('number');
-        return $field->render();
-    }
+  /**
+   * Returns the HTML markup of the field.
+   *
+   * @return string
+   */
+  public function getHTML() {
+    // TODO: consider using 'number' as the type.
+    $this->_getRenderer()->setAttribute('type', 'text');
+    $this->_getRenderer()->addValidationRule('number');
+    return parent::getHtml();
+  }
 
 }
