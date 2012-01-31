@@ -16,13 +16,13 @@
  */
 
 /**
- * A general renderer for HTML tags. It can render
+ * A general renderer for HTML elements. It can render
  * one DOM node with its attributes and content.
  *
  * @package Namodg
  * @subpackage Namodg_Renderer
  */
-class Namodg_Renderer_TagRenderer extends Namodg_RendererAbstract {
+class Namodg_Renderer_ElementRenderer extends Namodg_RendererAbstract {
 
   const VALIDATION_ATTRUBUTE = 'data-namodg-validation';
 
@@ -34,21 +34,21 @@ class Namodg_Renderer_TagRenderer extends Namodg_RendererAbstract {
   private $_builder;
 
   /**
-   * Initialize the tags renderer
+   * Initialize the elements renderer
    *
    * @param DOMDocument $builder
-   * @param string $tag
+   * @param string $element
    */
-  public function __construct(DOMDocument $builder, $tag) {
-    parent::__construct($tag);
+  public function __construct(DOMDocument $builder, $element) {
+    parent::__construct($element);
 
     $this->_builder = $builder;
   }
 
   /**
-   * Adds a validation rule to the field.
+   * Adds a validation rule to the element.
    * The validation attribute can be used by client-side languages
-   * to validate the form before the submission.
+   * to validate elements before the submission.
    *
    * @param string $rule
    * @return $this Allows chaining
@@ -65,7 +65,7 @@ class Namodg_Renderer_TagRenderer extends Namodg_RendererAbstract {
   }
 
   /**
-   * Remove a validation rule from the field only
+   * Remove a validation rule from the element only
    * if it exists.
    *
    * @param string $rule
@@ -82,7 +82,7 @@ class Namodg_Renderer_TagRenderer extends Namodg_RendererAbstract {
   }
 
   /**
-   * Clears all validation rules from the field.
+   * Clears all validation rules from the element.
    *
    * @return $this Allows chaining
    */
@@ -93,22 +93,22 @@ class Namodg_Renderer_TagRenderer extends Namodg_RendererAbstract {
   }
 
   /**
-   * Renders a tag's HTML
+   * Renders a element's HTML
    *
    * @return string
    */
   public function render() {
-    $field = $this->_getBuilder()->createElement($this->getTag());
+    $element = $this->_getBuilder()->createElement($this->getTag());
 
     foreach ($this->getAllAttributes() as $attr => $value) {
-      $field->setAttribute($attr, $value);
+      $element->setAttribute($attr, $value);
     }
 
     if ( $content = $this->getContent() ) {
-      $field->appendChild($this->_getBuilder()->createTextNode($content));
+      $element->appendChild($this->_getBuilder()->createTextNode($content));
     }
 
-    $this->_getBuilder()->appendChild($field);
+    $this->_getBuilder()->appendChild($element);
 
     return trim($this->_getBuilder()->saveHTML());
   }

@@ -2,7 +2,7 @@
 
 require_once 'tests/TestHelper.php';
 
-class TagRendererTest extends NamodgTestCase {
+class ElementRendererTest extends NamodgTestCase {
 
   protected $builderMock;
 
@@ -11,14 +11,14 @@ class TagRendererTest extends NamodgTestCase {
                               ->setConstructorArgs(array( '1.0' ))
                               ->getMock();
 
-    $this->subject = new Namodg_Renderer_TagRenderer($this->builderMock, 'p');
+    $this->subject = new Namodg_Renderer_ElementRenderer($this->builderMock, 'p');
   }
 
   public function testAddingOneValidationRule() {
     $this->subject->addValidationRule('required');
 
     assertEquals('required', $this->subject->getAttribute(
-      Namodg_Renderer_TagRenderer::VALIDATION_ATTRUBUTE
+      Namodg_Renderer_ElementRenderer::VALIDATION_ATTRUBUTE
     ));
   }
 
@@ -27,7 +27,7 @@ class TagRendererTest extends NamodgTestCase {
                   ->addValidationRule('email');
 
     assertEquals('required email', $this->subject->getAttribute(
-      Namodg_Renderer_TagRenderer::VALIDATION_ATTRUBUTE
+      Namodg_Renderer_ElementRenderer::VALIDATION_ATTRUBUTE
     ));
   }
 
@@ -38,7 +38,7 @@ class TagRendererTest extends NamodgTestCase {
     $this->subject->removeValidationRule('required');
 
     assertEquals('email', $this->subject->getAttribute(
-      Namodg_Renderer_TagRenderer::VALIDATION_ATTRUBUTE
+      Namodg_Renderer_ElementRenderer::VALIDATION_ATTRUBUTE
     ));
   }
 
@@ -49,7 +49,7 @@ class TagRendererTest extends NamodgTestCase {
     $this->subject->clearAllValidationRules();
 
     assertNull($this->subject->getAttribute(
-      Namodg_Renderer_TagRenderer::VALIDATION_ATTRUBUTE
+      Namodg_Renderer_ElementRenderer::VALIDATION_ATTRUBUTE
     ));
   }
 
@@ -93,8 +93,8 @@ class TagRendererTest extends NamodgTestCase {
     $this->subject->render();
   }
 
-  public function testRenderingTags() {
-    $renderer = new Namodg_Renderer_TagRenderer(
+  public function testRenderingElements() {
+    $renderer = new Namodg_Renderer_ElementRenderer(
       new DOMDocument('1.0')
     , 'p');
 
