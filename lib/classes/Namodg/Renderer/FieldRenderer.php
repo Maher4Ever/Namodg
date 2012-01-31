@@ -21,7 +21,7 @@
  * @package Namodg
  * @subpackage Namodg_Renderer
  */
-class Namodg_Renderer_FieldRenderer extends Namodg_Renderer_TagRenderer {
+class Namodg_Renderer_FieldRenderer extends Namodg_Renderer_ElementRenderer {
 
   /**
    * Initialize the fields renderer
@@ -62,5 +62,23 @@ class Namodg_Renderer_FieldRenderer extends Namodg_Renderer_TagRenderer {
   public function clearContent() {
     $this->removeAttribute('value');
     return $this;
+  }
+
+
+  /**
+   * Renders the field's HTML
+   *
+   * @return string
+   */
+  public function render() {
+    $field = $this->_getBuilder()->createElement($this->getTag());
+
+    foreach ($this->getAllAttributes() as $attr => $value) {
+      $field->setAttribute($attr, $value);
+    }
+
+    $this->_getBuilder()->appendChild($field);
+
+    return trim($this->_getBuilder()->saveHTML());
   }
 }

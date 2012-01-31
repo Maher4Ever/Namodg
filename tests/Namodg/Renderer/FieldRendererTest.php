@@ -37,7 +37,8 @@ class FieldRendererTest extends NamodgTestCase {
              ->setContent('Maher Sallam');
 
     assertEquals(
-      '<input data-namodg-validation="required" id="name" value="Maher Sallam">'
-    , $renderer->render());
+      '<input data-namodg-validation="required" id="name" value="Maher Sallam">',
+      $renderer->render()
+    );
   }
 }

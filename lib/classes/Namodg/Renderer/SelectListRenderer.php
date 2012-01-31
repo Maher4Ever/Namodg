@@ -21,7 +21,7 @@
  * @package Namodg
  * @subpackage Namodg_Renderer
  */
-class Namodg_Renderer_SelectListRenderer extends Namodg_Renderer_TagRenderer {
+class Namodg_Renderer_SelectListRenderer extends Namodg_Renderer_ElementRenderer {
 
   /**
    * The default option for the select list.
@@ -217,16 +217,16 @@ class Namodg_Renderer_SelectListRenderer extends Namodg_Renderer_TagRenderer {
    * @return string
    */
   public function render() {
-    $field = $this->_getBuilder()->createElement($this->getTag());
+    $selectList = $this->_getBuilder()->createElement($this->getTag());
 
     foreach ($this->getAllAttributes() as $attr => $value) {
-      $field->setAttribute($attr, $value);
+      $selectList->setAttribute($attr, $value);
     }
 
     if ( $defaultOption = $this->getDefaultOption() ) {
       $optionElem = $this->_getBuilder()->createElement('option');
       $optionElem->appendChild($this->_getBuilder()->createTextNode($defaultOption));
-      $field->appendChild($optionElem);
+      $selectList->appendChild($optionElem);
     }
 
     foreach ($this->getAllOptions() as $option) {
@@ -239,10 +239,10 @@ class Namodg_Renderer_SelectListRenderer extends Namodg_Renderer_TagRenderer {
 
       $optionElem->appendChild($this->_getBuilder()->createTextNode($option));
 
-      $field->appendChild($optionElem);
+      $selectList->appendChild($optionElem);
     }
 
-    $this->_getBuilder()->appendChild($field);
+    $this->_getBuilder()->appendChild($selectList);
 
     return trim($this->_getBuilder()->saveHTML());
   }
