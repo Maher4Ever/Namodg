@@ -16,7 +16,7 @@
  */
 
 /**
- * Namodg number field is used to reperesent
+ * Namodg captcha field is used to reperesent
  * a HTML input with human-verification in PHP.
  *
  * @package Namodg

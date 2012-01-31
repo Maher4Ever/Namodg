@@ -16,7 +16,7 @@
  */
 
 /**
- * Namodg number field is used to reperesent
+ * Namodg select list is used to reperesent
  * a HTML select element in PHP.
  *
  * @package Namodg
