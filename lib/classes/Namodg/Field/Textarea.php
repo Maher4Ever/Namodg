@@ -16,15 +16,32 @@
  */
 
 /**
- * Namodg Textarea, used for multi-line string data
+ * Namodg textarea field is used to represent
+ * a HTML textrea in PHP.
  *
  * @package Namodg
+ * @subpackage Namodg_Field
  */
 class Namodg_Field_Textarea extends Namodg_Field_TextField {
 
-    public function getHTML() {
-        $field = new Namodg_Renderer_FieldRenderer('textarea', $this);
-        return $field->render();
-    }
+  /**
+   * Initialize the field.
+   *
+   * @param Namodg_Renderer_TextareaRenderer $renderer
+   * @param string $id
+   * @param array $metaData
+   */
+  public function __construct(Namodg_Renderer_TextareaRenderer $renderer, $id = NULL, array $metaData = array()) {
+    parent::__construct($renderer, $id, $metaData);
+  }
+
+  /**
+   * Returns the HTML markup of the field.
+   *
+   * @return string
+   */
+  public function getHtml() {
+    return Namodg_FieldAbstract::getHtml();
+  }
 
 }

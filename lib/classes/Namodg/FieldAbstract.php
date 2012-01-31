@@ -72,11 +72,11 @@ abstract class Namodg_FieldAbstract implements Namodg_FieldInterface {
   /**
    * Initialize the field.
    *
-   * @param Namodg_Renderer_FieldRenderer $renderer
+   * @param Namodg_Renderer_ElementRenderer $renderer
    * @param string $id
    * @param array $metaData
    */
-  public function __construct(Namodg_Renderer_FieldRenderer $renderer, $id = NULL, array $metaData = array()) {
+  public function __construct(Namodg_Renderer_ElementRenderer $renderer, $id = NULL, array $metaData = array()) {
     $this->_renderer = $renderer;
     $id = trim((string)$id);
     $this->_id = !$id ? uniqid( $this->getType() . '_' ) : $id;
@@ -273,7 +273,7 @@ abstract class Namodg_FieldAbstract implements Namodg_FieldInterface {
   /**
    * Returns the field HTML renderer
    *
-   * @return Namodg_Renderer_FieldRenderer
+   * @return Namodg_Renderer_ElementRenderer
    */
   protected function _getRenderer() {
     return $this->_renderer;
