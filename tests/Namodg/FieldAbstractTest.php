@@ -53,12 +53,21 @@ class FieldAbstractTest extends NamodgTestCase {
     assertEquals('my-value', $this->subject->getValue());
   }
 
+  public function testGettingHtmlSafeValues() {
+    $this->subject->setValue('<script></script>');
+
+    assertEquals(
+      '&lt;script&gt;&lt;/script&gt;',
+      $this->subject->getHtmlSafeValue()
+    );
+  }
+
   public function testGettingType() {
     $stub = $this->fieldBuilder
-                 ->setMockClassName('Namodg_Field_TextField')
+                 ->setMockClassName('Namodg_Field_MyTextField')
                  ->getMockForAbstractClass();
 
-    assertEquals('textfield', $stub->getType());
+    assertEquals('mytextfield', $stub->getType());
   }
 
   public function testSettingAndGettingMetaAttributes() {
@@ -126,7 +135,12 @@ class FieldAbstractTest extends NamodgTestCase {
 
     $this->rendererMock->expects($this->once())
                        ->method('setAttribute')
-                       ->with('name', $this->subject->getId());
+                       ->with('name', $this->subject->getId())
+                       ->will($this->returnValue($this->rendererMock));
+
+    $this->rendererMock->expects($this->once())
+                   ->method('setContent')
+                   ->with($this->subject->getHtmlSafeValue());
 
     $this->rendererMock->expects($this->once())
                        ->method('addValidationRule')

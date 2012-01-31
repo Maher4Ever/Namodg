@@ -114,6 +114,21 @@ abstract class Namodg_FieldAbstract implements Namodg_FieldInterface {
   }
 
   /**
+   * Returns an escaped version of the value
+   * which can safely be used inside HTML.
+   * if the value is not set, an empty string
+   * is returned.
+   *
+   * @return string
+   */
+  public function getHtmlSafeValue() {
+    if ( is_null($this->getValue()) ) {
+      return '';
+    }
+    return htmlspecialchars($this->getValue(), ENT_QUOTES, 'UTF-8');
+  }
+
+  /**
    * Returns the type of the field.
    *
    * @return string
@@ -233,7 +248,8 @@ abstract class Namodg_FieldAbstract implements Namodg_FieldInterface {
    * @return string
    */
   public function getHtml() {
-    $this->_getRenderer()->setAttribute('name', $this->getId());
+    $this->_getRenderer()->setAttribute('name', $this->getId())
+                         ->setContent($this->getHtmlSafeValue());
 
     if ( $this->isRequired() ) {
       $this->_getRenderer()->addValidationRule('required');
