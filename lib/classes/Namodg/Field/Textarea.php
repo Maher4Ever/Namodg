@@ -22,7 +22,7 @@
  * @package Namodg
  * @subpackage Namodg_Field
  */
-class Namodg_Field_Textarea extends Namodg_Field_TextField {
+class Namodg_Field_Textarea extends Namodg_FieldAbstract {
 
   /**
    * Initialize the field.
@@ -33,6 +33,16 @@ class Namodg_Field_Textarea extends Namodg_Field_TextField {
    */
   public function __construct(Namodg_Renderer_TextareaRenderer $renderer, $id = NULL, array $metaData = array()) {
     parent::__construct($renderer, $id, $metaData);
+  }
+
+  /**
+   * Returns a sanitized version of the value
+   * which safely can be saved in a database.
+   *
+   * @return string
+   */
+  public function getSanitizedValue() {
+    return filter_var($this->getValue(), FILTER_SANITIZE_STRING);
   }
 
   /**

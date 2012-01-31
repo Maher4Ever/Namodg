@@ -25,6 +25,17 @@
 class Namodg_Field_TextField extends Namodg_FieldAbstract {
 
   /**
+   * Initialize the field.
+   *
+   * @param Namodg_Renderer_FieldRenderer $renderer
+   * @param string $id
+   * @param array $metaData
+   */
+  public function __construct(Namodg_Renderer_FieldRenderer $renderer, $id = NULL, array $metaData = array()) {
+    parent::__construct($renderer, $id, $metaData);
+  }
+
+  /**
    * Returns a sanitized version of the value
    * which safely can be saved in a database.
    *
