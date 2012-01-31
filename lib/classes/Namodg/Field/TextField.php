@@ -16,30 +16,32 @@
  */
 
 /**
- * Namodg Text Field, used for one-line string data
+ * Namodg text field is used to reperesent
+ * a HTML text input in PHP.
  *
  * @package Namodg
+ * @subpackage Namodg_Field
  */
 class Namodg_Field_TextField extends Namodg_FieldAbstract {
 
-    public function isValid() {
-        $value = $this->getValue();
+  /**
+   * Returns a sanitized version of the value
+   * which safely can be saved in a database.
+   *
+   * @return string
+   */
+  public function getSanitizedValue() {
+    return filter_var($this->getValue(), FILTER_SANITIZE_STRING);
+  }
 
-        if ($this->getOption('required') && empty($value)) {
-            $this->_setValidationError('required');
-            return false;
-        }
+  /**
+   * Returns the HTML markup of the field.
+   *
+   * @return string
+   */
+  public function getHtml() {
+    $this->_getRenderer()->setAttribute('type', 'text');
+    return parent::getHtml();
+  }
 
-        return true;
-    }
-
-    public function getCleanedValue() {
-        return filter_var( $this->getValue(), FILTER_SANITIZE_STRING);
-    }
-
-    public function getHTML() {
-        $field = new Namodg_Renderer_FieldRenderer('input', $this);
-        $field->addAttr('type', 'text');
-        return $field->render();
-    }
 }
