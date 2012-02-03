@@ -10,7 +10,7 @@ class TextareaTest extends NamodgTestCase {
     $this->renderer = new Namodg_Renderer_TextareaRenderer(
       new DOMDocument('1.0')
     );
-    $this->subject = new Namodg_Field_Textarea($this->renderer, 'name');
+    $this->subject = new Namodg_Field_Textarea($this->renderer);
   }
 
   public function testGettingSanitizedValues() {
@@ -23,11 +23,12 @@ class TextareaTest extends NamodgTestCase {
   }
 
   public function testGettingHtml() {
-    $this->subject->setValue('<h1>Maher Sallam</h1>')
+    $this->subject->setId('message')
+                  ->setValue('<h1>Maher Sallam</h1>')
                   ->addValidation(new Namodg_Validation_RequiredValidation);
 
     $result = <<<HTML
-<textarea name="name" data-namodg-validation="required">
+<textarea name="message" data-namodg-validation="required">
   &amp;lt;h1&amp;gt;Maher Sallam&amp;lt;/h1&amp;gt;
 </textarea>
 HTML;

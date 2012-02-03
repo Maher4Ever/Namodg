@@ -30,17 +30,13 @@ class Namodg_Field_CaptchaField extends Namodg_FieldAbstract {
    * @param Namodg_Validation_RequiredValidation $requiredValidation
    * @param Namodg_Validation_CaptchaSimpleArabicValidation $captchaValidation
    * @param Namodg_Renderer_CaptchaFieldRenderer $renderer
-   * @param string $id
-   * @param array $metaData
    */
   public function __construct(
     Namodg_Validation_RequiredValidation $requiredValidation,
     Namodg_Validation_CaptchaSimpleArabicValidation $captchaValidation,
-    Namodg_Renderer_CaptchaFieldRenderer $renderer,
-    $id = NULL,
-    array $metaData = array()
+    Namodg_Renderer_CaptchaFieldRenderer $renderer
   ) {
-    parent::__construct($renderer, $id, $metaData);
+    parent::__construct($renderer);
     $this->addValidation($requiredValidation)
          ->addValidation($captchaValidation)
          ->setMetaAttribute('send', FALSE);
@@ -63,7 +59,7 @@ class Namodg_Field_CaptchaField extends Namodg_FieldAbstract {
    * @return string
    */
   public function getHTML() {
-    $this->_getRenderer()->setAttribute('type', 'text')
+    $this->getRenderer()->setAttribute('type', 'text')
                          ->addValidationRule('captcha');
     return parent::getHtml();
   }

@@ -73,14 +73,21 @@ abstract class Namodg_FieldAbstract implements Namodg_FieldInterface {
    * Initialize the field.
    *
    * @param Namodg_Renderer_ElementRenderer $renderer
-   * @param string $id
-   * @param array $metaData
    */
-  public function __construct(Namodg_Renderer_ElementRenderer $renderer, $id = NULL, array $metaData = array()) {
+  public function __construct(Namodg_Renderer_ElementRenderer $renderer) {
     $this->_renderer = $renderer;
-    $id = trim((string)$id);
-    $this->_id = !$id ? uniqid( $this->getType() . '_' ) : $id;
-    $this->_addMetaData($metaData);
+    $this->_id = uniqid( $this->getType() . '_' );
+  }
+
+  /**
+   * Sets the unique identifier of the field.
+   *
+   * @param string $id
+   * @return $this Allows chaining
+   */
+  public function setId($id) {
+    $this->_id = (string)$id;
+    return $this;
   }
 
   /**
@@ -159,6 +166,18 @@ abstract class Namodg_FieldAbstract implements Namodg_FieldInterface {
    */
   public function getMetaAttribute($name) {
     return isset($this->_meta[$name]) ? $this->_meta[$name] : null;
+  }
+
+  /**
+   * Adds meta data to the field. This is designed
+   * to be used internally by subclasses.
+   *
+   * @param array $data
+   * @return $this Allows chaining
+   */
+  protected function _addMetaData(array $data) {
+    $this->_meta = array_merge($this->_meta, $data);
+    return $this;
   }
 
   /**
@@ -243,39 +262,28 @@ abstract class Namodg_FieldAbstract implements Namodg_FieldInterface {
   }
 
   /**
+   * Returns the field HTML renderer
+   *
+   * @return Namodg_Renderer_ElementRenderer
+   */
+  public function getRenderer() {
+    return $this->_renderer;
+  }
+
+  /**
    * Returns the HTML markup of the field.
    *
    * @return string
    */
   public function getHtml() {
-    $this->_getRenderer()->setAttribute('name', $this->getId())
+    $this->getRenderer()->setAttribute('name', $this->getId())
                          ->setContent($this->getHtmlSafeValue());
 
     if ( $this->isRequired() ) {
-      $this->_getRenderer()->addValidationRule('required');
+      $this->getRenderer()->addValidationRule('required');
     }
 
-    return $this->_getRenderer()->render();
+    return $this->getRenderer()->render();
   }
 
-  /**
-   * Adds meta data to the field. This is designed
-   * to be used internally by subclasses.
-   *
-   * @param array $data
-   * @return $this Allows chaining
-   */
-  protected function _addMetaData(array $data) {
-    $this->_meta = array_merge($this->_meta, $data);
-    return $this;
-  }
-
-  /**
-   * Returns the field HTML renderer
-   *
-   * @return Namodg_Renderer_ElementRenderer
-   */
-  protected function _getRenderer() {
-    return $this->_renderer;
-  }
 }

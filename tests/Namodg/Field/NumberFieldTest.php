@@ -9,8 +9,7 @@ class NumberFieldTest extends NamodgTestCase {
       new Namodg_Validation_NumericArabicValidation,
       new Namodg_Renderer_FieldRenderer(
         new DOMDocument('1.0')
-      ),
-      'tel'
+      )
     );
   }
 
@@ -21,7 +20,8 @@ class NumberFieldTest extends NamodgTestCase {
   }
 
   public function testGettingHtml() {
-    $this->subject->setValue('12345')
+    $this->subject->setId('tel')
+                  ->setValue('12345')
                   ->addValidation(new Namodg_Validation_RequiredValidation);
 
     assertEquals(

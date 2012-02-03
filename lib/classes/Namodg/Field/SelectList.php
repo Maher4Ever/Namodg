@@ -28,11 +28,9 @@ class Namodg_Field_SelectList extends Namodg_FieldAbstract {
    * Initialize the field.
    *
    * @param Namodg_Renderer_SelectListRenderer $renderer
-   * @param string $id
-   * @param array $metaData
    */
-  public function __construct(Namodg_Renderer_SelectListRenderer $renderer, $id = NULL, array $metaData = array()) {
-    parent::__construct($renderer, $id, $metaData);
+  public function __construct(Namodg_Renderer_SelectListRenderer $renderer) {
+    parent::__construct($renderer);
   }
 
   /**

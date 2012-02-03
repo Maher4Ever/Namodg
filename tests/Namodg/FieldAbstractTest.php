@@ -22,29 +22,20 @@ class FieldAbstractTest extends NamodgTestCase {
                           ->getMockForAbstractClass();
   }
 
-  public function testConstructorAutoGeneratesIdWhenPassedNone() {
+  public function testConstructorAutoGeneratesId() {
     assertNotEmpty($this->subject->getId());
   }
 
-  public function testConstructorSetsNameWhenPassedOne() {
-    $stub = $this->_mockFieldWithId('email');
-    assertEquals('email', $stub->getId());
-  }
-
-  public function testConstructorSetsDefaultMetaDataWhenPassedNone() {
+  public function testConstructorSetsDefaultMetaData() {
     assertEquals(array(
       'send'     => TRUE
     ), $this->subject->getMetaData());
   }
 
-  public function testConstructorSetsMetaDataWhenPassedOne() {
-    $meta = array(
-      'send'     => FALSE
-    );
+  public function testSettingAndGettingTheId() {
+    $this->subject->setId('email');
 
-    $stub = $this->_mockFieldWithMeta($meta);
-
-    assertEquals($meta, $stub->getMetaData());
+    assertEquals('email', $this->subject->getId());
   }
 
   public function testSettingAndGettingValues() {
@@ -149,15 +140,4 @@ class FieldAbstractTest extends NamodgTestCase {
     $this->subject->getHtml();
   }
 
-  private function _mockFieldWithId($id) {
-    return $this->fieldBuilder
-                ->setConstructorArgs(array( $this->rendererMock, $id ))
-                ->getMockForAbstractClass();
-  }
-
-  private function _mockFieldWithMeta($meta) {
-    return $this->fieldBuilder
-                ->setConstructorArgs(array( $this->rendererMock, NULL, $meta ))
-                ->getMockForAbstractClass();
-  }
 }

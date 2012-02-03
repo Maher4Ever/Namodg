@@ -8,8 +8,7 @@ class SelectListTest extends NamodgTestCase {
     $this->subject = new Namodg_Field_SelectList(
       new Namodg_Renderer_SelectListRenderer(
         new DOMDocument('1.0')
-      ),
-      'rate'
+      )
     );
   }
 
@@ -23,7 +22,8 @@ class SelectListTest extends NamodgTestCase {
   }
 
   public function testGettingHtml() {
-    $this->subject->setValue('5 stars')
+    $this->subject->setId('rate')
+                  ->setValue('5 stars')
                   ->addValidation(new Namodg_Validation_RequiredValidation);
 
     $result = <<<HTML

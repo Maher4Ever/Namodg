@@ -29,16 +29,12 @@ class Namodg_Field_EmailField extends Namodg_FieldAbstract {
    *
    * @param Namodg_Validation_EmailValidation $validation
    * @param Namodg_Renderer_FieldRenderer $renderer
-   * @param string $id
-   * @param array $metaData
    */
   public function __construct(
     Namodg_Validation_EmailValidation $validation,
-    Namodg_Renderer_FieldRenderer $renderer,
-    $id = NULL,
-    array $metaData = array()
+    Namodg_Renderer_FieldRenderer $renderer
   ) {
-    parent::__construct($renderer, $id, $metaData);
+    parent::__construct($renderer);
     $this->addValidation($validation);
   }
 
@@ -58,7 +54,7 @@ class Namodg_Field_EmailField extends Namodg_FieldAbstract {
    * @return string
    */
   public function getHTML() {
-    $this->_getRenderer()->setAttribute('type', 'email')
+    $this->getRenderer()->setAttribute('type', 'email')
                          ->addValidationRule('email');
     return parent::getHtml();
   }

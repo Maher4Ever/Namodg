@@ -10,7 +10,7 @@ class TextFieldTest extends NamodgTestCase {
     $this->renderer = new Namodg_Renderer_FieldRenderer(
       new DOMDocument('1.0')
     );
-    $this->subject = new Namodg_Field_TextField($this->renderer, 'name');
+    $this->subject = new Namodg_Field_TextField($this->renderer);
   }
 
   public function testGettingSanitizedValues() {
@@ -23,7 +23,8 @@ class TextFieldTest extends NamodgTestCase {
   }
 
   public function testGettingHtml() {
-    $this->subject->setValue('Maher Sallam')
+    $this->subject->setId('name')
+                  ->setValue('Maher Sallam')
                   ->addValidation(new Namodg_Validation_RequiredValidation);
 
     assertEquals(

@@ -8,14 +8,8 @@ class SubmitButtonTest extends NamodgTestCase {
     $this->subject = new Namodg_Field_SubmitButton(
       new Namodg_Renderer_FieldRenderer(
         new DOMDocument('1.0')
-      ),
-      'send',
-      'Submit the form'
+      )
     );
-  }
-
-  public function testConstructorSetsValueWhenPassedOne() {
-    assertEquals('Submit the form', $this->subject->getValue());
   }
 
   public function testThatCaptchaFieldShouldNotBeSentByDefault() {
@@ -37,6 +31,9 @@ class SubmitButtonTest extends NamodgTestCase {
   }
 
   public function testGettingHtml() {
+    $this->subject->setId('send')
+                  ->setValue('Submit the form');
+
     assertEquals(
       '<input type="submit" name="send" value="Submit the form">',
       $this->subject->getHtml()

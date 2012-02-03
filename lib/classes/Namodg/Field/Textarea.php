@@ -28,11 +28,9 @@ class Namodg_Field_Textarea extends Namodg_FieldAbstract {
    * Initialize the field.
    *
    * @param Namodg_Renderer_TextareaRenderer $renderer
-   * @param string $id
-   * @param array $metaData
    */
-  public function __construct(Namodg_Renderer_TextareaRenderer $renderer, $id = NULL, array $metaData = array()) {
-    parent::__construct($renderer, $id, $metaData);
+  public function __construct(Namodg_Renderer_TextareaRenderer $renderer) {
+    parent::__construct($renderer);
   }
 
   /**

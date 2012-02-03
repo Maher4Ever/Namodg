@@ -28,19 +28,10 @@ class Namodg_Field_SubmitButton extends Namodg_FieldAbstract {
    * Initialize the field.
    *
    * @param Namodg_Renderer_FieldRenderer $renderer
-   * @param string $id
-   * @param string $value
-   * @param array $metaData
    */
-  public function __construct(
-    Namodg_Renderer_FieldRenderer $renderer,
-    $id = NULL,
-    $value = '',
-    array $metaData = array()
-  ) {
-    parent::__construct($renderer, $id, $metaData);
-    $this->setValue($value)
-         ->setMetaAttribute('send', FALSE);
+  public function __construct(Namodg_Renderer_FieldRenderer $renderer) {
+    parent::__construct($renderer);
+    $this->setMetaAttribute('send', FALSE);
   }
 
   /**
@@ -81,7 +72,7 @@ class Namodg_Field_SubmitButton extends Namodg_FieldAbstract {
    * @return string
    */
   public function getHtml() {
-    $this->_getRenderer()->setAttribute('type', 'submit');
+    $this->getRenderer()->setAttribute('type', 'submit');
     return parent::getHtml();
   }
 

@@ -10,8 +10,7 @@ class CaptchaFieldTest extends NamodgTestCase {
       new Namodg_Validation_CaptchaSimpleArabicValidation,
       new Namodg_Renderer_CaptchaFieldRenderer(
         new DOMDocument('1.0')
-      ),
-      'captcha'
+      )
     );
   }
 
@@ -26,7 +25,8 @@ class CaptchaFieldTest extends NamodgTestCase {
   }
 
   public function testGettingHtml() {
-    $this->subject->setValue('7');
+    $this->subject->setId('captcha')
+                  ->setValue('7');
 
     $result = <<<HTML
 <p class="namodg-captcha-question">%d + %d</p>

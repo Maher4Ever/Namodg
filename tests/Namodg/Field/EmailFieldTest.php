@@ -9,8 +9,7 @@ class EmailFieldTest extends NamodgTestCase {
       new Namodg_Validation_EmailValidation,
       new Namodg_Renderer_FieldRenderer(
         new DOMDocument('1.0')
-      ),
-      'email'
+      )
     );
   }
 
@@ -21,7 +20,8 @@ class EmailFieldTest extends NamodgTestCase {
   }
 
   public function testGettingHtml() {
-    $this->subject->setValue('email@website.com')
+    $this->subject->setId('email')
+                  ->setValue('email@website.com')
                   ->addValidation(new Namodg_Validation_RequiredValidation);
 
     assertEquals(

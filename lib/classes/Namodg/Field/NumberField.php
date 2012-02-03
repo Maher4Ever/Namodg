@@ -29,16 +29,12 @@ class Namodg_Field_NumberField extends Namodg_FieldAbstract {
    *
    * @param Namodg_Validation_NumericArabicValidation $validation
    * @param Namodg_Renderer_FieldRenderer $renderer
-   * @param string $id
-   * @param array $metaData
    */
   public function __construct(
     Namodg_Validation_NumericArabicValidation $validation,
-    Namodg_Renderer_FieldRenderer $renderer,
-    $id = NULL,
-    array $metaData = array()
+    Namodg_Renderer_FieldRenderer $renderer
   ) {
-    parent::__construct($renderer, $id, $metaData);
+    parent::__construct($renderer);
     $this->addValidation($validation);
   }
 
@@ -60,8 +56,8 @@ class Namodg_Field_NumberField extends Namodg_FieldAbstract {
    */
   public function getHTML() {
     // TODO: consider using 'number' as the type.
-    $this->_getRenderer()->setAttribute('type', 'text');
-    $this->_getRenderer()->addValidationRule('number');
+    $this->getRenderer()->setAttribute('type', 'text');
+    $this->getRenderer()->addValidationRule('number');
     return parent::getHtml();
   }
 
